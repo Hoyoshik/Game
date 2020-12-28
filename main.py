@@ -25,15 +25,23 @@ class ACT1:
         y = 0
         speed = 20
         c = 0
+        c1 = 0
         img_names = ('0.png', '1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png')
         all_imgs = list()
+        all_imgs2 = list()
         for img in img_names:
             all_imgs.append(pygame.image.load(img))
+
+        img_names2 = ('кл1пр.png', 'кл2пр.png', 'кл3пр.png', 'кл4пр.png', 'кл5пр.png', 'кл6пр.png', 'кл7пр.png', 'кл8пр.png',
+                      'кл9пр.png', 'кл10пр.png', 'кл11пр.png', 'кл12пр.png', 'кл13пр.png')
+        for img2 in img_names2:
+            all_imgs2.append(pygame.image.load(img2))
 
         pygame.display.flip()
         clock = pygame.time.Clock()
         running = True
         while running:
+            player = playerR
             screen.fill((0, 0, 0))
             clock.tick(120)
             for event in pygame.event.get():
@@ -46,17 +54,23 @@ class ACT1:
                 player = playerL
             elif move[pygame.K_RIGHT] and x <= 1250:
                 x += speed
-                player = playerR
+                print(c1)
+                player = all_imgs2[c1]
+                c1 += 1
             elif move[pygame.K_RIGHT] and x >= 1250 and background_x != -1300:
                 background_x -= speed
                 dedx -= speed
+                print(c1)
+                player = all_imgs2[c1]
+                c1 += 1
             elif move[pygame.K_LEFT] and x <= 20 and background_x < 0:
                 background_x += speed
                 dedx += speed
             c += 1
             if c == 8:
                 c = 0
-
+            if c1 == 13:
+                c1 = 0
             screen.blit(background, (background_x, y))
             screen.blit(player, (x, y))
             screen.blit(playerDED, (dedx, y))
