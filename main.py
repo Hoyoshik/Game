@@ -1,4 +1,5 @@
 import pygame
+import random
 
 
 a, b = 1600, 900
@@ -12,6 +13,7 @@ class ACT1:
 
         playerR = pygame.image.load('персонаж.png')
         playerL = pygame.image.load('персонаж2.png')
+        d = pygame.image.load('0.png')
         background = pygame.image.load('фон3.png')
         background_x = 0
         dedx = 2000
@@ -21,14 +23,19 @@ class ACT1:
 
         x = 20
         y = 0
-        speed = 100
+        speed = 20
+        c = 0
+        img_names = ('0.png', '1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png')
+        all_imgs = list()
+        for img in img_names:
+            all_imgs.append(pygame.image.load(img))
 
         pygame.display.flip()
         clock = pygame.time.Clock()
         running = True
         while running:
             screen.fill((0, 0, 0))
-            clock.tick(60)
+            clock.tick(120)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -46,9 +53,13 @@ class ACT1:
             elif move[pygame.K_LEFT] and x <= 20 and background_x < 0:
                 background_x += speed
                 dedx += speed
+            c += 1
+            if c == 8:
+                c = 0
 
             screen.blit(background, (background_x, y))
             screen.blit(player, (x, y))
             screen.blit(playerDED, (dedx, y))
+            screen.blit(all_imgs[c], (background_x, y))
             pygame.display.update()
         pygame.quit()
