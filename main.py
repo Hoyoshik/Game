@@ -1,41 +1,49 @@
 import pygame
 
 
+a, b = 1600, 900
+size = width, height = a, b
+screen = pygame.display.set_mode(size)
 
-if __name__ == '__main__':
-    pygame.init()
-    a, b = 1600, 900
-    size = width, height = a, b
-    screen = pygame.display.set_mode(size)
 
-    playerR = pygame.image.load('персонаж.png')
-    playerL = pygame.image.load('персонаж2.png')
-    bg = pygame.image.load('фон1.png')
-    player = playerR
+class ACT1:
+    if __name__ == '__main__':
+        pygame.init()
 
-    x = 50
-    y = 50
-    speed = 10
+        playerR = pygame.image.load('персонаж.png')
+        playerL = pygame.image.load('персонаж2.png')
+        background = pygame.image.load('фон3.png')
+        background_x = 0
+        player = playerR
 
-    pygame.display.flip()
-    clock = pygame.time.Clock()
-    running = True
-    while running:
-        clock.tick(60)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-        keys = pygame.key.get_pressed()
+        x = 50
+        y = 50
+        speed = 5
 
-        y = 0
-        if keys[pygame.K_LEFT]:
-            x -= speed
-            player = playerL
-        elif keys[pygame.K_RIGHT]:
-            x += speed
-            player = playerR
-        screen.blit(bg, (0, 0))
+        pygame.display.flip()
+        clock = pygame.time.Clock()
+        running = True
+        while running:
+            screen.fill((0, 0, 0))
+            clock.tick(60)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+            move = pygame.key.get_pressed()
+            y = 0
 
-        screen.blit(player, (x, y))
-        pygame.display.update()
-    pygame.quit()
+            if move[pygame.K_LEFT] and x >= 1:
+                x -= speed
+                player = playerL
+                if background_x != 0:
+                    background_x += speed
+            elif move[pygame.K_RIGHT] and x <= 1300:
+                if x != 1599:
+                    x += speed
+                player = playerR
+                if background_x <= 3200:
+                    background_x -= speed
+            screen.blit(background, (background_x, 0))
+            screen.blit(player, (x, y))
+            pygame.display.update()
+        pygame.quit()
