@@ -14,11 +14,14 @@ class ACT1:
         playerL = pygame.image.load('персонаж2.png')
         background = pygame.image.load('фон3.png')
         background_x = 0
+        dedx = 2000
         player = playerR
 
-        x = 50
-        y = 50
-        speed = 5
+        playerDED = pygame.image.load('Гробовщик.png')
+
+        x = 20
+        y = 0
+        speed = 100
 
         pygame.display.flip()
         clock = pygame.time.Clock()
@@ -31,19 +34,21 @@ class ACT1:
                     running = False
             move = pygame.key.get_pressed()
             y = 0
-
-            if move[pygame.K_LEFT] and x >= 1:
+            if move[pygame.K_LEFT] and x > 20:
                 x -= speed
                 player = playerL
-                if background_x != 0:
-                    background_x += speed
-            elif move[pygame.K_RIGHT] and x <= 1300:
-                if x != 1599:
-                    x += speed
+            elif move[pygame.K_RIGHT] and x <= 1250:
+                x += speed
                 player = playerR
-                if background_x <= 3200:
-                    background_x -= speed
-            screen.blit(background, (background_x, 0))
+            elif move[pygame.K_RIGHT] and x >= 1250 and background_x != -1300:
+                background_x -= speed
+                dedx -= speed
+            elif move[pygame.K_LEFT] and x <= 20 and background_x < 0:
+                background_x += speed
+                dedx += speed
+
+            screen.blit(background, (background_x, y))
             screen.blit(player, (x, y))
+            screen.blit(playerDED, (dedx, y))
             pygame.display.update()
         pygame.quit()
