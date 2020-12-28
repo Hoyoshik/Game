@@ -1,11 +1,12 @@
 import pygame
-import random
-
+from moviepy.editor import *
 
 a, b = 1600, 900
 size = width, height = a, b
 screen = pygame.display.set_mode(size)
 
+clip = VideoFileClip('ДЛЯ ЗАСТАВКИ.mp4')
+clip.preview()
 
 class ACT1:
     if __name__ == '__main__':
@@ -54,13 +55,11 @@ class ACT1:
                 player = playerL
             elif move[pygame.K_RIGHT] and x <= 1250:
                 x += speed
-                print(c1)
                 player = all_imgs2[c1]
                 c1 += 1
             elif move[pygame.K_RIGHT] and x >= 1250 and background_x != -1300:
                 background_x -= speed
                 dedx -= speed
-                print(c1)
                 player = all_imgs2[c1]
                 c1 += 1
             elif move[pygame.K_LEFT] and x <= 20 and background_x < 0:
