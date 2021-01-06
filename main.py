@@ -2,6 +2,7 @@ import pygame, sys
 from pygame.locals import *
 import PREVIEW
 
+
 def ACT1():
     if __name__ == '__main__':
         screen = pygame.display.set_mode(size)
@@ -13,6 +14,7 @@ def ACT1():
         background_x = 0
         dedx = 2000
         playerDED = pygame.image.load('ГробовщикЛ.png')
+
         x = 20
         speed = 20
         c = 0
@@ -31,10 +33,11 @@ def ACT1():
             all_imgs2.append(pygame.image.load(img2))
         clock = pygame.time.Clock()
         running = True
+        fight = False
 
         while running:
             player = playerR
-            clock.tick(120)
+            clock.tick(60)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -63,11 +66,16 @@ def ACT1():
             elif move[pygame.K_LEFT] and x <= 20 and background_x < 0:
                 background_x += speed
                 dedx += speed
+            if move[pygame.K_SPACE] and x > 1100 and fight == True:
+                ACT1_5()
+                pygame.quit()
             c += 1
             if c == 8:
                 c = 0
             if c1 == 13:
                 c1 = 0
+
+            print(x)
             screen.blit(background, (background_x, y))
             screen.blit(player, (x, y))
             screen.blit(playerDED, (dedx, y))
@@ -76,7 +84,69 @@ def ACT1():
         pygame.quit()
 
 
+def ACT1_5():
+    if __name__ == '__main__':
+        screen = pygame.display.set_mode(size)
+        pygame.display.flip()
+        pygame.mouse.set_visible(False)
+        playerR = pygame.image.load('персонаж.png')
+        playerL = pygame.image.load('персонаж2.png')
+        background = pygame.image.load('фон2.png')
+        background_x = 0
+        x = 20
+        speed = 20
+        c = 0
+        c1 = 0
+        all_imgs2 = list()
+
+        img_names2 = (
+            'кл1пр.png', 'кл2пр.png', 'кл3пр.png', 'кл4пр.png', 'кл5пр.png', 'кл6пр.png', 'кл7пр.png',
+            'кл8пр.png',
+            'кл9пр.png', 'кл10пр.png', 'кл11пр.png', 'кл12пр.png', 'кл13пр.png')
+        for img2 in img_names2:
+            all_imgs2.append(pygame.image.load(img2))
+        clock = pygame.time.Clock()
+        running = True
+        while running:
+            player = playerR
+            clock.tick(60)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                    main_menu()
+                elif pygame.mouse.get_focused():
+                    if event.type == pygame.MOUSEMOTION:
+                        mouse_pos = pygame.mouse.get_pos()
+                        screen.blit(IMAGE, mouse_pos)
+                        pygame.display.flip()
+                else:
+                    pygame.display.flip()
+            move = pygame.key.get_pressed()
+            y = 0
+            if move[pygame.K_LEFT] and x > 20:
+                x -= speed
+                player = playerL
+            elif move[pygame.K_RIGHT] and x <= 1250:
+                x += speed
+                player = all_imgs2[c1]
+                c1 += 1
+            elif move[pygame.K_RIGHT] and x >= 1250:
+                player = all_imgs2[c1]
+                c1 += 1
+            c += 1
+            if c == 8:
+                c = 0
+            if c1 == 13:
+                c1 = 0
+
+            screen.blit(background, (background_x, y))
+            screen.blit(player, (x, y))
+            pygame.display.update()
+        pygame.quit()
+
+
 IMAGE = pygame.image.load('курсор2.png')
+
 
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
@@ -87,9 +157,9 @@ def draw_text(text, font, color, surface, x, y):
 
 def main_menu():
     while True:
-        screen.fill((0, 0, 0))
+        screen.fill((pygame.Color('Black')))
         screen.blit(background, (0, 0))
-        draw_text('главное меню', pygame.font.Font('20031 (1).otf', 50) , (255, 255, 255), screen, 20, 20)
+        draw_text('главное меню', pygame.font.Font('20031 (1).otf', 50), (255, 255, 255), screen, 20, 20)
         button_1 = pygame.Rect(94, 200, 395, 90)
         button_2 = pygame.Rect(94, 350, 395, 90)
         button_3 = pygame.Rect(94, 500, 395, 90)
@@ -128,14 +198,12 @@ def main_menu():
         pygame.display.update()
         mainClock.tick(60)
 
+
 pygame.mouse.set_visible(False)
 a, b = 1600, 900
 size = width, height = a, b
 screen = pygame.display.set_mode(size)
 mainClock = pygame.time.Clock()
-
-pygame.mixer.init()
-pygame.mixer.music.load('МЕЛОДИЯ.mp3')
 
 font = pygame.font.SysFont(None, 20)
 
