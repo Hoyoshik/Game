@@ -4,21 +4,16 @@ import PREVIEW
 
 def ACT1():
     if __name__ == '__main__':
-        pygame.init()
         screen = pygame.display.set_mode(size)
         pygame.display.flip()
-        running = True
         pygame.mouse.set_visible(False)
         playerR = pygame.image.load('персонаж.png')
         playerL = pygame.image.load('персонаж2.png')
-        d = pygame.image.load('0.png')
         background = pygame.image.load('фон3.png')
         background_x = 0
         dedx = 2000
-        player = playerR
         playerDED = pygame.image.load('Гробовщик.png')
         x = 20
-        y = 0
         speed = 20
         c = 0
         c1 = 0
@@ -49,7 +44,6 @@ def ACT1():
                         mouse_pos = pygame.mouse.get_pos()
                         screen.blit(IMAGE, mouse_pos)
                         pygame.display.flip()
-                        mouse_pos1 = mouse_pos
                 else:
                     pygame.display.flip()
             move = pygame.key.get_pressed()
