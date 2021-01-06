@@ -12,7 +12,7 @@ def ACT1():
         background = pygame.image.load('фон3.png')
         background_x = 0
         dedx = 2000
-        playerDED = pygame.image.load('Гробовщик.png')
+        playerDED = pygame.image.load('ГробовщикЛ.png')
         x = 20
         speed = 20
         c = 0
@@ -112,7 +112,6 @@ def main_menu():
         draw_text('продолжить игру', pygame.font.Font('20031 (1).otf', 38), (255, 255, 255), screen, 105, 376)
         draw_text('настройки', pygame.font.Font('20031 (1).otf', 50), (255, 255, 255), screen, 130, 520)
 
-        click = False
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -121,9 +120,6 @@ def main_menu():
                 if event.key == K_ESCAPE:
                     pygame.quit()
                     sys.exit()
-            if event.type == MOUSEBUTTONDOWN:
-                if event.button == 1:
-                    click = True
 
         mouse_pos = pygame.mouse.get_pos()
         screen.blit(IMAGE, mouse_pos)
