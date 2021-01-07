@@ -7,7 +7,7 @@ def ACT1():
     playerL = pygame.image.load('персонаж2.png').convert_alpha()
     background = pygame.image.load('фон3.png').convert_alpha()
     playerDED = pygame.image.load('ГробовщикЛ.png').convert_alpha()
-    key = pygame.image.load('Гробовщик.png').convert_alpha()
+    key = pygame.transform.smoothscale(pygame.image.load('Ключ.png').convert_alpha(), (50, 50))
     img_names = ('0.png', '1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png')
     img_names2 = (
         'кл1пр.png', 'кл2пр.png', 'кл3пр.png', 'кл4пр.png', 'кл5пр.png', 'кл6пр.png', 'кл7пр.png',
@@ -20,6 +20,13 @@ def ACT1():
         pygame.mouse.set_visible(False)
         background_x = 0
         dedx = 2000
+
+        keyx = 2000
+        keyshow = False
+
+        inventarkey = False
+
+        textstart = True
 
         x = 20
         speed = 20
@@ -34,6 +41,9 @@ def ACT1():
         clock = pygame.time.Clock()
         running = True
         grDead = False
+        hp1ded = False
+        flag = False
+        mainloop = True
 
         while running:
             player = playerR
@@ -57,19 +67,29 @@ def ACT1():
                 elif move[pygame.K_RIGHT] and x >= 1250 and background_x != -1300:
                     background_x -= speed
                     dedx -= speed
+                    keyx -= speed
                     player = all_imgs2[c1]
                     c1 += 1
                 elif move[pygame.K_LEFT] and x <= 20 and background_x < 0:
                     background_x += speed
                     dedx += speed
+                    keyx += speed
             elif x == 1260:
                 back = pygame.image.load('фон3.png').convert_alpha()
                 ded1 = pygame.transform.smoothscale(pygame.image.load('битваГ1.png').convert_alpha(), (600, 600))
                 ded2 = pygame.transform.smoothscale(pygame.image.load('битваГ2.png').convert_alpha(), (600, 600))
                 ded3 = pygame.transform.smoothscale(pygame.image.load('битваГ3.png').convert_alpha(), (600, 600))
+                deda = pygame.transform.smoothscale(pygame.image.load('битваГ4.png').convert_alpha(), (600, 600))
+                deda2 = pygame.transform.smoothscale(pygame.image.load('битваГ5.png').convert_alpha(), (600, 600))
+                dedl = pygame.transform.smoothscale(pygame.image.load('битваГ6.png').convert_alpha(), (600, 600))
+                dedl2 = pygame.transform.smoothscale(pygame.image.load('битваГ7.png').convert_alpha(), (600, 600))
+                dedl3 = pygame.transform.smoothscale(pygame.image.load('битваГ8.png').convert_alpha(), (600, 600))
+                dedl4 = pygame.transform.smoothscale(pygame.image.load('битваГ9.png').convert_alpha(), (600, 600))
+                dedl5 = pygame.transform.smoothscale(pygame.image.load('битваГ10.png').convert_alpha(), (600, 600))
                 p1 = pygame.transform.smoothscale(pygame.image.load('БитваП1.png').convert_alpha(), (600, 600))
                 p2 = pygame.transform.smoothscale(pygame.image.load('БитваП2.png').convert_alpha(), (600, 600))
                 p3 = pygame.transform.smoothscale(pygame.image.load('БитваП3.png').convert_alpha(), (600, 600))
+
                 battle = list()
                 battle.append(p1)
                 battle.append(p2)
@@ -80,20 +100,34 @@ def ACT1():
                 battle1.append(ded2)
                 battle1.append(ded3)
 
-                grob = (
-                'Полоска здоровья.png', 'Полоска здоровья1.png', 'Полоска здоровья2.png', 'Полоска здоровья3.png',
-                'Полоска здоровья4.png', 'Полоска здоровья5.png', 'Полоска здоровья6.png', 'Полоска здоровья7.png',
-                'Полоска здоровья8.png')
-                grob1 = list()
-                for img in grob:
-                    grob1.append(pygame.image.load(img).convert_alpha())
+                anim = list()
+                anim.append(deda)
+                anim.append(deda2)
+                anim.append(dedl)
 
-                grob2 = list()
+                battlelopata = list()
+                battlelopata.append(dedl)
+                battlelopata.append(dedl2)
+                battlelopata.append(dedl3)
+                battlelopata.append(dedl4)
+                battlelopata.append(dedl5)
+
+                grob = (
+                    'Полоска здоровья.png', 'Полоска здоровья1.png', 'Полоска здоровья2.png', 'Полоска здоровья3.png',
+                    'Полоска здоровья4.png', 'Полоска здоровья5.png', 'Полоска здоровья6.png', 'Полоска здоровья7.png',
+                    'Полоска здоровья8.png')
+                playerFight = list()
+                for img in grob:
+                    playerFight.append(pygame.image.load(img).convert_alpha())
+
+                grobovshik = list()
                 grob3 = (
-                'Полоска здоровья.png', 'Полоска здоровья11.png', 'Полоска здоровья22.png', 'Полоска здоровья33.png',
-                'Полоска здоровья44.png')
+                    'Полоска здоровья.png', 'Полоска здоровья11.png', 'Полоска здоровья22.png',
+                    'Полоска здоровья33.png',
+                    'Полоска здоровья44.png')
+
                 for mgi in grob3:
-                    grob2.append(pygame.image.load(mgi).convert_alpha())
+                    grobovshik.append(pygame.image.load(mgi).convert_alpha())
                 j = 0
                 g = 0
                 kadrplayer = 0
@@ -102,77 +136,109 @@ def ACT1():
                 schetpi1 = 0
                 schetpi = 0
                 br = True
+                anima = False
+                animper = 0
+                flag = False
+                dedSt1 = True
+                st1 = True
+                dead = True
                 while br:
-                    screen.fill((0, 0, 0))
-                    screen.blit(back, (0, 0))
-                    screen.blit(pygame.transform.scale(grob1[g], (400, 50)), (300, 250))
-                    screen.blit(pygame.transform.scale(grob2[kadrplayer], (400, 50)), (840, 250))
-                    for event in pygame.event.get():
-                        if event.type == QUIT:
-                            pygame.quit()
-                            sys.exit()
-                        if event.type == KEYDOWN:
-                            if event.key == K_SPACE and c != True:
-                                c = True
-                                if kadrplayer == 4:
-                                    br = False
-                                    grDead = True
-                                    break
+                                mainloop = True
+                                screen.fill((0, 0, 0))
+                                screen.blit(back, (0, 0))
+                                screen.blit(pygame.transform.scale(playerFight[g], (400, 50)), (300, 250))
+                                screen.blit(pygame.transform.scale(grobovshik[kadrplayer], (400, 50)), (840, 250))
+                                for event in pygame.event.get():
+                                    if event.type == QUIT:
+                                        pygame.quit()
+                                        sys.exit()
+                                    if event.type == KEYDOWN:
+                                        if event.key == K_SPACE and c != True:
+                                            c = True
+                                            if kadrplayer == 4:
+                                                for i in range(1):
+                                                    dedSt1 == False
+                                                    dead == False
+                                                    st1 = False
+                                                    grDead = True
+                                                    keyshow = True
+                                                    anima = True
+                                                    br = False
+                                            else:
+                                                kadrplayer += 1
+                                        if event.key == K_ESCAPE:
+                                            sys.exit()
+                                if anima:
+                                    for i in range(2):
+                                        screen.blit(anim[i], (450, 300))
+                                        pygame.display.update()
+                                if c == True:
+                                    screen.blit(battle[j], (450, 300))
+                                    if j != 2:
+                                        j += 1
+                                    else:
+                                        c = False
+                                        screen.blit(battle[j], (450, 300))
+                                        j = 0
+
                                 else:
-                                    kadrplayer += 1
-                            if event.key == K_ESCAPE:
-                                sys.exit()
-                    if c == True:
-                        screen.blit(battle[j], (450, 300))
-                        if j != 2:
-                            j += 1
-                        else:
-                            c = False
-                            screen.blit(battle[j], (450, 300))
-                            j = 0
+                                    screen.blit(battle[0], (450, 300))
 
-                    else:
-                        screen.blit(battle[0], (450, 300))
+                                if schetpi % 10 == 0:
+                                    c1 = True
+                                    if g == 8:
+                                        st1 = False
+                                        dedSt1 = False
 
-                    if schetpi % 10 == 0:
-                        c1 = True
-                        if g == 8:
-                            pass
-                        else:
-                            g += 1
-                    if c1 == True:
-                        screen.blit(battle1[schetpi1], (450, 300))
-                        if schetpi1 != 2:
-                            schetpi1 += 1
-                        else:
-                            c1 = False
-                            screen.blit(battle1[schetpi1], (450, 300))
-                            schetpi1 = 0
-                    else:
-                        screen.blit(battle1[0], (450, 300))
-                    pygame.display.update()
-                    mainClock.tick(10)
-                    schetpi += 1
 
+                                    else:
+                                        g += 1
+
+                                if c1 == True and anima == False:
+                                    screen.blit(battle1[schetpi1], (450, 300))
+                                    if schetpi1 != 2 and anima == False:
+                                        schetpi1 += 1
+                                    else:
+                                        c1 = False
+                                        screen.blit(battle1[schetpi1], (450, 300))
+                                        schetpi1 = 0
+                                else:
+                                    screen.blit(battle1[0], (450, 300))
+                                pygame.display.update()
+                                mainClock.tick(10)
+                                schetpi += 1
+                            
             if grDead == True:
                 dedx -= speed
 
-            if move[pygame.K_SPACE] and x > 1100 and dedx < 100:
+            if move[pygame.K_SPACE] and x < 1260 and keyshow:
+                inventarkey = True
+                keyshow = False
+                textstart = False
+
+            if move[pygame.K_SPACE] and x == 1260 and dedx < 100 and inventarkey == True:
                 ACT1_5()
                 pygame.quit()
+
             c += 1
             if c == 8:
                 c = 0
             if c1 == 13:
                 c1 = 0
             screen.blit(background, (background_x, y))
-            screen.blit(key, (x + 10, y + 10))
+            if keyshow:
+                screen.blit(key, (keyx, 800))
             screen.blit(player, (x, y))
             screen.blit(playerDED, (dedx, y))
             mouse_pos = pygame.mouse.get_pos()
             screen.blit(IMAGE, mouse_pos)
             screen.blit(all_imgs[c], (background_x, y))
+            if textstart:
+                draw_text('попадите в Дом', pygame.font.Font('20031 (1).otf', 20), (255, 255, 255), screen, 20, 20)
+            if x == 1260 and inventarkey:
+                draw_text('откройте дверь', pygame.font.Font('20031 (1).otf', 20), (255, 255, 255), screen, 20, 20)
             pygame.display.update()
+            print(x)
         pygame.quit()
 
 
