@@ -45,7 +45,8 @@ def ACT1():
         hp1ded = False
         flag = False
         mainloop = True
-
+        chis = 0
+        schetpi = 0
         while running:
             player = playerR
             clock.tick(30)
@@ -75,140 +76,14 @@ def ACT1():
                     background_x += speed
                     dedx += speed
                     keyx += speed
-            elif x == 1260:
-                back = pygame.image.load('фон3.png').convert_alpha()
-                ded1 = pygame.transform.smoothscale(pygame.image.load('битваГ1.png').convert_alpha(), (600, 600))
-                ded2 = pygame.transform.smoothscale(pygame.image.load('битваГ2.png').convert_alpha(), (600, 600))
-                ded3 = pygame.transform.smoothscale(pygame.image.load('битваГ3.png').convert_alpha(), (600, 600))
-                deda = pygame.transform.smoothscale(pygame.image.load('битваГ4.png').convert_alpha(), (600, 600))
-                deda2 = pygame.transform.smoothscale(pygame.image.load('битваГ5.png').convert_alpha(), (600, 600))
-                dedl = pygame.transform.smoothscale(pygame.image.load('битваГ6.png').convert_alpha(), (600, 600))
-                dedl2 = pygame.transform.smoothscale(pygame.image.load('битваГ7.png').convert_alpha(), (600, 600))
-                dedl3 = pygame.transform.smoothscale(pygame.image.load('битваГ8.png').convert_alpha(), (600, 600))
-                dedl4 = pygame.transform.smoothscale(pygame.image.load('битваГ9.png').convert_alpha(), (600, 600))
-                dedl5 = pygame.transform.smoothscale(pygame.image.load('битваГ10.png').convert_alpha(), (600, 600))
-                p1 = pygame.transform.smoothscale(pygame.image.load('БитваП1.png').convert_alpha(), (600, 600))
-                p2 = pygame.transform.smoothscale(pygame.image.load('БитваП2.png').convert_alpha(), (600, 600))
-                p3 = pygame.transform.smoothscale(pygame.image.load('БитваП3.png').convert_alpha(), (600, 600))
-
-                battle = list()
-                battle.append(p1)
-                battle.append(p2)
-                battle.append(p3)
-
-                battle1 = list()
-                battle1.append(ded1)
-                battle1.append(ded2)
-                battle1.append(ded3)
-
-                anim = list()
-                anim.append(deda)
-                anim.append(deda2)
-                anim.append(dedl)
-
-                battlelopata = list()
-                battlelopata.append(dedl)
-                battlelopata.append(dedl2)
-                battlelopata.append(dedl3)
-                battlelopata.append(dedl4)
-                battlelopata.append(dedl5)
-
-                grob = (
-                    'Полоска здоровья.png', 'Полоска здоровья1.png', 'Полоска здоровья2.png', 'Полоска здоровья3.png',
-                    'Полоска здоровья4.png', 'Полоска здоровья5.png', 'Полоска здоровья6.png', 'Полоска здоровья7.png',
-                    'Полоска здоровья8.png')
-                playerFight = list()
-                for img in grob:
-                    playerFight.append(pygame.image.load(img).convert_alpha())
-
-                grobovshik = list()
-                grob3 = (
-                    'Полоска здоровья.png', 'Полоска здоровья11.png', 'Полоска здоровья22.png',
-                    'Полоска здоровья33.png',
-                    'Полоска здоровья44.png')
-
-                for mgi in grob3:
-                    grobovshik.append(pygame.image.load(mgi).convert_alpha())
-                j = 0
-                g = 0
-                kadrplayer = 0
-                c = False
-                c1 = False
-                schetpi1 = 0
-                schetpi = 0
-                br = True
-                anima = False
-                animper = 0
-                flag = False
-                dedSt1 = True
-                st1 = True
-                dead = True
-                while br:
-                    mainloop = True
-                    screen.fill((0, 0, 0))
-                    screen.blit(back, (0, 0))
-                    screen.blit(pygame.transform.scale(playerFight[g], (400, 50)), (300, 250))
-                    screen.blit(pygame.transform.scale(grobovshik[kadrplayer], (400, 50)), (840, 250))
-                    for event in pygame.event.get():
-                        if event.type == QUIT:
-                            pygame.quit()
-                            sys.exit()
-                        if event.type == KEYDOWN:
-                            if event.key == K_SPACE and c != True:
-                                c = True
-                                if kadrplayer == 4:
-                                    for i in range(1):
-                                        dedSt1 == False
-                                        dead == False
-                                        st1 = False
-                                        grDead = True
-                                        keyshow = True
-                                        anima = True
-                                        br = False
-                                else:
-                                    kadrplayer += 1
-                            if event.key == K_ESCAPE:
-                                sys.exit()
-                    if anima:
-                        for i in range(2):
-                            screen.blit(anim[i], (450, 300))
-                            pygame.display.update()
-                    if c == True:
-                        screen.blit(battle[j], (450, 300))
-                        if j != 2:
-                            j += 1
-                        else:
-                            c = False
-                            screen.blit(battle[j], (450, 300))
-                            j = 0
-
-                    else:
-                        screen.blit(battle[0], (450, 300))
-
-                    if schetpi % 10 == 0:
-                        c1 = True
-                        if g == 8:
-                            st1 = False
-                            dedSt1 = False
-
-
-                        else:
-                            g += 1
-
-                    if c1 == True and anima == False:
-                        screen.blit(battle1[schetpi1], (450, 300))
-                        if schetpi1 != 2 and anima == False:
-                            schetpi1 += 1
-                        else:
-                            c1 = False
-                            screen.blit(battle1[schetpi1], (450, 300))
-                            schetpi1 = 0
-                    else:
-                        screen.blit(battle1[0], (450, 300))
-                    pygame.display.update()
-                    mainClock.tick(10)
-                    schetpi += 1
-
+            elif x == 1260 and schetpi < 1:
+                screen.fill((0, 0, 0))
+                pygame.display.update()
+                schetpi += 1
+                BATTLE_DED()
+            elif schetpi > 0:
+                grDead = True
+                keyshow = True
             if grDead == True:
                 dedx -= speed
 
@@ -357,6 +232,134 @@ def main_menu():
         pygame.display.update()
         mainClock.tick(60)
 
+def BATTLE_DED():
+    global chis
+    back = pygame.image.load('фон3.png').convert_alpha()
+    ded1 = pygame.transform.smoothscale(pygame.image.load('битваГ1.png').convert_alpha(), (600, 600))
+    ded2 = pygame.transform.smoothscale(pygame.image.load('битваГ2.png').convert_alpha(), (600, 600))
+    ded3 = pygame.transform.smoothscale(pygame.image.load('битваГ3.png').convert_alpha(), (600, 600))
+    deda = pygame.transform.smoothscale(pygame.image.load('битваГ4.png').convert_alpha(), (600, 600))
+    deda2 = pygame.transform.smoothscale(pygame.image.load('битваГ5.png').convert_alpha(), (600, 600))
+    dedl = pygame.transform.smoothscale(pygame.image.load('битваГ6.png').convert_alpha(), (600, 600))
+    dedl2 = pygame.transform.smoothscale(pygame.image.load('битваГ7.png').convert_alpha(), (600, 600))
+    dedl3 = pygame.transform.smoothscale(pygame.image.load('битваГ8.png').convert_alpha(), (600, 600))
+    dedl4 = pygame.transform.smoothscale(pygame.image.load('битваГ9.png').convert_alpha(), (600, 600))
+    dedl5 = pygame.transform.smoothscale(pygame.image.load('битваГ10.png').convert_alpha(), (600, 600))
+    p1 = pygame.transform.smoothscale(pygame.image.load('БитваП1.png').convert_alpha(), (600, 600))
+    p2 = pygame.transform.smoothscale(pygame.image.load('БитваП2.png').convert_alpha(), (600, 600))
+    p3 = pygame.transform.smoothscale(pygame.image.load('БитваП3.png').convert_alpha(), (600, 600))
+
+    battle = list()
+    battle.append(p1)
+    battle.append(p2)
+    battle.append(p3)
+
+    battle1 = list()
+    battle1.append(ded1)
+    battle1.append(ded2)
+    battle1.append(ded3)
+
+    anim = list()
+    anim.append(deda)
+    anim.append(deda2)
+    anim.append(dedl)
+
+    battlelopata = list()
+    battlelopata.append(dedl)
+    battlelopata.append(dedl2)
+    battlelopata.append(dedl3)
+    battlelopata.append(dedl4)
+    battlelopata.append(dedl5)
+
+    grob = (
+        'Полоска здоровья.png', 'Полоска здоровья1.png', 'Полоска здоровья2.png', 'Полоска здоровья3.png',
+        'Полоска здоровья4.png', 'Полоска здоровья5.png', 'Полоска здоровья6.png', 'Полоска здоровья7.png',
+        'Полоска здоровья8.png')
+    playerFight = list()
+    for img in grob:
+        playerFight.append(pygame.image.load(img).convert_alpha())
+
+    grobovshik = list()
+    grob3 = (
+        'Полоска здоровья.png', 'Полоска здоровья11.png', 'Полоска здоровья22.png',
+        'Полоска здоровья33.png',
+        'Полоска здоровья44.png')
+
+    for mgi in grob3:
+        grobovshik.append(pygame.image.load(mgi).convert_alpha())
+    j = 0
+    g = 0
+    kadrplayer = 0
+    c = False
+    c1 = False
+    schetpi1 = 0
+    schetpi = 0
+    br = True
+    anima = False
+    dedSt1 = True
+    dead = True
+    screen.fill((0, 0, 0))
+    pygame.display.update()
+    while br:
+        screen.fill((0, 0, 0))
+        screen.blit(back, (0, 0))
+        screen.blit(pygame.transform.scale(playerFight[g], (400, 50)), (300, 250))
+        screen.blit(pygame.transform.scale(grobovshik[kadrplayer], (400, 50)), (840, 250))
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_SPACE and c != True:
+                    c = True
+                    if kadrplayer == 4:
+                        for i in range(1):
+                            dedSt1 == False
+                            dead == False
+                            anima = True
+                            br = False
+                    else:
+                        kadrplayer += 1
+                if event.key == K_ESCAPE:
+                    sys.exit()
+        if anima:
+            for i in range(2):
+                screen.blit(anim[i], (450, 300))
+                pygame.display.update()
+        if c == True:
+            screen.blit(battle[j], (450, 300))
+            if j != 2:
+                j += 1
+            else:
+                c = False
+                screen.blit(battle[j], (450, 300))
+                j = 0
+
+        else:
+            screen.blit(battle[0], (450, 300))
+
+        if schetpi % 10 == 0:
+            c1 = True
+            if g == 8:
+                PREVIEW.death()
+                break
+            else:
+                g += 1
+
+        if c1 == True and anima == False:
+            screen.blit(battle1[schetpi1], (450, 300))
+            if schetpi1 != 2 and anima == False:
+                schetpi1 += 1
+            else:
+                c1 = False
+                screen.blit(battle1[schetpi1], (450, 300))
+                schetpi1 = 0
+        else:
+            screen.blit(battle1[0], (450, 300))
+        pygame.display.update()
+        mainClock.tick(10)
+        schetpi += 1
+    chis = 1
 
 pygame.mouse.set_visible(False)
 a, b = 1600, 900
