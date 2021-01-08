@@ -2,6 +2,7 @@ import pygame, sys
 from pygame.locals import *
 import PREVIEW
 
+
 def ACT1():
     playerR = pygame.image.load('персонаж.png').convert_alpha()
     playerL = pygame.image.load('персонаж2.png').convert_alpha()
@@ -143,71 +144,71 @@ def ACT1():
                 st1 = True
                 dead = True
                 while br:
-                                mainloop = True
-                                screen.fill((0, 0, 0))
-                                screen.blit(back, (0, 0))
-                                screen.blit(pygame.transform.scale(playerFight[g], (400, 50)), (300, 250))
-                                screen.blit(pygame.transform.scale(grobovshik[kadrplayer], (400, 50)), (840, 250))
-                                for event in pygame.event.get():
-                                    if event.type == QUIT:
-                                        pygame.quit()
-                                        sys.exit()
-                                    if event.type == KEYDOWN:
-                                        if event.key == K_SPACE and c != True:
-                                            c = True
-                                            if kadrplayer == 4:
-                                                for i in range(1):
-                                                    dedSt1 == False
-                                                    dead == False
-                                                    st1 = False
-                                                    grDead = True
-                                                    keyshow = True
-                                                    anima = True
-                                                    br = False
-                                            else:
-                                                kadrplayer += 1
-                                        if event.key == K_ESCAPE:
-                                            sys.exit()
-                                if anima:
-                                    for i in range(2):
-                                        screen.blit(anim[i], (450, 300))
-                                        pygame.display.update()
-                                if c == True:
-                                    screen.blit(battle[j], (450, 300))
-                                    if j != 2:
-                                        j += 1
-                                    else:
-                                        c = False
-                                        screen.blit(battle[j], (450, 300))
-                                        j = 0
-
-                                else:
-                                    screen.blit(battle[0], (450, 300))
-
-                                if schetpi % 10 == 0:
-                                    c1 = True
-                                    if g == 8:
+                    mainloop = True
+                    screen.fill((0, 0, 0))
+                    screen.blit(back, (0, 0))
+                    screen.blit(pygame.transform.scale(playerFight[g], (400, 50)), (300, 250))
+                    screen.blit(pygame.transform.scale(grobovshik[kadrplayer], (400, 50)), (840, 250))
+                    for event in pygame.event.get():
+                        if event.type == QUIT:
+                            pygame.quit()
+                            sys.exit()
+                        if event.type == KEYDOWN:
+                            if event.key == K_SPACE and c != True:
+                                c = True
+                                if kadrplayer == 4:
+                                    for i in range(1):
+                                        dedSt1 == False
+                                        dead == False
                                         st1 = False
-                                        dedSt1 = False
-
-
-                                    else:
-                                        g += 1
-
-                                if c1 == True and anima == False:
-                                    screen.blit(battle1[schetpi1], (450, 300))
-                                    if schetpi1 != 2 and anima == False:
-                                        schetpi1 += 1
-                                    else:
-                                        c1 = False
-                                        screen.blit(battle1[schetpi1], (450, 300))
-                                        schetpi1 = 0
+                                        grDead = True
+                                        keyshow = True
+                                        anima = True
+                                        br = False
                                 else:
-                                    screen.blit(battle1[0], (450, 300))
-                                pygame.display.update()
-                                mainClock.tick(10)
-                                schetpi += 1
-                            
+                                    kadrplayer += 1
+                            if event.key == K_ESCAPE:
+                                sys.exit()
+                    if anima:
+                        for i in range(2):
+                            screen.blit(anim[i], (450, 300))
+                            pygame.display.update()
+                    if c == True:
+                        screen.blit(battle[j], (450, 300))
+                        if j != 2:
+                            j += 1
+                        else:
+                            c = False
+                            screen.blit(battle[j], (450, 300))
+                            j = 0
+
+                    else:
+                        screen.blit(battle[0], (450, 300))
+
+                    if schetpi % 10 == 0:
+                        c1 = True
+                        if g == 8:
+                            st1 = False
+                            dedSt1 = False
+
+
+                        else:
+                            g += 1
+
+                    if c1 == True and anima == False:
+                        screen.blit(battle1[schetpi1], (450, 300))
+                        if schetpi1 != 2 and anima == False:
+                            schetpi1 += 1
+                        else:
+                            c1 = False
+                            screen.blit(battle1[schetpi1], (450, 300))
+                            schetpi1 = 0
+                    else:
+                        screen.blit(battle1[0], (450, 300))
+                    pygame.display.update()
+                    mainClock.tick(10)
+                    schetpi += 1
+
             if grDead == True:
                 dedx -= speed
 
@@ -301,6 +302,7 @@ def ACT1_5():
 
 IMAGE = pygame.image.load('курсор2.png')
 
+
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
     textrect = textobj.get_rect()
@@ -309,6 +311,9 @@ def draw_text(text, font, color, surface, x, y):
 
 
 def main_menu():
+    pygame.mixer.init()
+    pygame.mixer.music.load('МЕЛОДИЯ.mp3')
+    pygame.mixer.music.play(-1)
     while True:
         screen.fill((pygame.Color('Black')))
         screen.blit(background, (0, 0))
@@ -327,6 +332,7 @@ def main_menu():
             screen.blit(but1, (90, 195))
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    pygame.mixer.music.stop()
                     ACT1()
                     pygame.quit()
         if button_2.collidepoint((mx, my)):
@@ -365,5 +371,5 @@ background = pygame.image.load('фон3.png')
 
 but = pygame.transform.scale(pygame.image.load('кнопка.png').convert_alpha(), (400, 100))
 but1 = pygame.transform.scale(pygame.image.load('кнопка1.png').convert_alpha(), (400, 100))
-#PREVIEW.p()
+# PREVIEW.p()
 main_menu()
