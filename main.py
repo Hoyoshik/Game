@@ -1,5 +1,7 @@
-import pygame, sys
+import pygame
+import sys
 from pygame.locals import *
+
 import PREVIEW
 
 
@@ -11,9 +13,9 @@ def ACT1():
     key = pygame.transform.smoothscale(pygame.image.load('Ключ.png').convert_alpha(), (50, 50))
     img_names = ('0.png', '1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png')
     img_names2 = (
-        'кл1пр.png', 'кл2пр.png', 'кл3пр.png', 'кл4пр.png', 'кл5пр.png', 'кл6пр.png', 'кл7пр.png',
-        'кл8пр.png',
-        'кл9пр.png', 'кл10пр.png', 'кл11пр.png', 'кл12пр.png', 'кл13пр.png')
+        'пр1.png', 'пр2.png', 'пр3.png', 'пр4.png', 'пр5.png', 'пр6.png', 'пр7.png',
+        'пр8.png', 'пр9.png', 'пр10.png', 'пр11.png', 'пр12.png', 'пр13.png', 'пр14.png', 'пр15.png', 'пр16.png',
+        'пр17.png', 'пр18.png', 'пр19.png', 'пр20.png', 'пр21.png', 'пр22.png', 'пр23.png', 'пр24.png')
 
     if __name__ == '__main__':
         screen = pygame.display.set_mode(size)
@@ -49,7 +51,7 @@ def ACT1():
         schetpi = 0
         while running:
             player = playerR
-            clock.tick(30)
+            clock.tick(12)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -74,7 +76,7 @@ def ACT1():
                     c1 += 1
                 elif move[pygame.K_LEFT] and x <= 20 and background_x < 0:
                     background_x += speed
-                    dedx += speed
+                    dedx += 30
                     keyx += speed
             elif x == 1260 and schetpi < 1:
                 screen.fill((0, 0, 0))
@@ -84,24 +86,24 @@ def ACT1():
             elif schetpi > 0:
                 grDead = True
                 keyshow = True
-            if grDead == True:
+            if grDead:
                 dedx -= speed
 
             if move[pygame.K_SPACE] and x < 1260 and keyshow:
                 inventarkey = True
                 keyshow = False
-                textstart = False
 
-            if move[pygame.K_SPACE] and x == 1260 and dedx < 100 and inventarkey == True:
+            if move[pygame.K_SPACE] and x == 1260 and dedx < 100 and inventarkey:
                 ACT1_5()
                 pygame.quit()
 
             c += 1
             if c == 8:
                 c = 0
-            if c1 == 13:
+            if c1 == 24:
                 c1 = 0
             screen.blit(background, (background_x, y))
+
             if keyshow:
                 screen.blit(key, (keyx, 800))
             screen.blit(player, (x, y))
@@ -109,10 +111,13 @@ def ACT1():
             mouse_pos = pygame.mouse.get_pos()
             screen.blit(IMAGE, mouse_pos)
             screen.blit(all_imgs[c], (background_x, y))
+
             if textstart:
                 draw_text('попадите в Дом', pygame.font.Font('20031 (1).otf', 20), (255, 255, 255), screen, 20, 20)
             if x == 1260 and inventarkey:
+                textstart = False
                 draw_text('откройте дверь', pygame.font.Font('20031 (1).otf', 20), (255, 255, 255), screen, 20, 20)
+
             pygame.display.update()
             print(x)
         pygame.quit()
@@ -134,16 +139,16 @@ def ACT1_5():
         all_imgs2 = list()
 
         img_names2 = (
-            'кл1пр.png', 'кл2пр.png', 'кл3пр.png', 'кл4пр.png', 'кл5пр.png', 'кл6пр.png', 'кл7пр.png',
-            'кл8пр.png',
-            'кл9пр.png', 'кл10пр.png', 'кл11пр.png', 'кл12пр.png', 'кл13пр.png')
+            'пр1.png', 'пр2.png', 'пр3.png', 'пр4.png', 'пр5.png', 'пр6.png', 'пр7.png',
+            'пр8.png', 'пр9.png', 'пр10.png', 'пр11.png', 'пр12.png', 'пр13.png', 'пр14.png', 'пр15.png', 'пр16.png',
+            'пр17.png', 'пр18.png', 'пр19.png', 'пр20.png', 'пр21.png', 'пр22.png', 'пр23.png', 'пр24.png')
         for img2 in img_names2:
             all_imgs2.append(pygame.image.load(img2))
         clock = pygame.time.Clock()
         running = True
         while running:
             player = playerR
-            clock.tick(60)
+            clock.tick(12)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -232,9 +237,10 @@ def main_menu():
         pygame.display.update()
         mainClock.tick(60)
 
+
 def BATTLE_DED():
     global chis
-    back = pygame.image.load('фон3.png').convert_alpha()
+    back = pygame.image.load('фонбитва.png').convert_alpha()
     ded1 = pygame.transform.smoothscale(pygame.image.load('битваГ1.png').convert_alpha(), (600, 600))
     ded2 = pygame.transform.smoothscale(pygame.image.load('битваГ2.png').convert_alpha(), (600, 600))
     ded3 = pygame.transform.smoothscale(pygame.image.load('битваГ3.png').convert_alpha(), (600, 600))
@@ -360,6 +366,7 @@ def BATTLE_DED():
         mainClock.tick(10)
         schetpi += 1
     chis = 1
+
 
 pygame.mouse.set_visible(False)
 a, b = 1600, 900
