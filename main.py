@@ -16,7 +16,8 @@ def ACT1():
         'пр1.png', 'пр2.png', 'пр3.png', 'пр4.png', 'пр5.png', 'пр6.png', 'пр7.png',
         'пр8.png', 'пр9.png', 'пр10.png', 'пр11.png', 'пр12.png', 'пр13.png', 'пр14.png', 'пр15.png', 'пр16.png',
         'пр17.png', 'пр18.png', 'пр19.png', 'пр20.png', 'пр21.png', 'пр22.png', 'пр23.png', 'пр24.png')
-
+    img_names3 = ("ле1.png", "ле2.png", "ле3.png", "ле4.png", "ле5.png", "ле6.png", "ле7.png", "ле8.png", "ле9.png",
+                  "ле10.png", "ле11.png", "ле12.png")
     if __name__ == '__main__':
         screen = pygame.display.set_mode(size)
         pygame.display.flip()
@@ -35,12 +36,17 @@ def ACT1():
         speed = 20
         c = 0
         c1 = 0
+        z = 0
+        z1 = 0
         all_imgs = list()
         all_imgs2 = list()
+        all_imgs3 = list()
         for img in img_names:
             all_imgs.append(pygame.image.load(img).convert_alpha())
         for img2 in img_names2:
             all_imgs2.append(pygame.image.load(img2).convert_alpha())
+        for img3 in img_names3:
+            all_imgs3.append(pygame.image.load(img3).convert_alpha())
         clock = pygame.time.Clock()
         running = True
         grDead = False
@@ -64,6 +70,8 @@ def ACT1():
                 if move[pygame.K_LEFT] and x > 20:
                     x -= speed
                     player = playerL
+                    player = all_imgs3[z1]
+                    z1 += 1
                 elif move[pygame.K_RIGHT] and x <= 1250:
                     x += speed
                     player = all_imgs2[c1]
@@ -75,7 +83,10 @@ def ACT1():
                     player = all_imgs2[c1]
                     c1 += 1
                 elif move[pygame.K_LEFT] and x <= 20 and background_x < 0:
+                    player = playerL
                     background_x += speed
+                    player = all_imgs3[z1]
+                    z1 += 1
                     dedx += 30
                     keyx += speed
             elif x == 1260 and schetpi < 1:
@@ -102,6 +113,8 @@ def ACT1():
                 c = 0
             if c1 == 24:
                 c1 = 0
+            if z1 == 12:
+                z1 = 0
             screen.blit(background, (background_x, y))
 
             if keyshow:
@@ -136,14 +149,20 @@ def ACT1_5():
         speed = 20
         c = 0
         c1 = 0
+        z1 = 0
         all_imgs2 = list()
+        all_imgs3 = list()
 
         img_names2 = (
             'пр1.png', 'пр2.png', 'пр3.png', 'пр4.png', 'пр5.png', 'пр6.png', 'пр7.png',
             'пр8.png', 'пр9.png', 'пр10.png', 'пр11.png', 'пр12.png', 'пр13.png', 'пр14.png', 'пр15.png', 'пр16.png',
             'пр17.png', 'пр18.png', 'пр19.png', 'пр20.png', 'пр21.png', 'пр22.png', 'пр23.png', 'пр24.png')
+        img_names3 = ("ле1.png", "ле2.png", "ле3.png", "ле4.png", "ле5.png", "ле6.png", "ле7.png", "ле8.png", "ле9.png",
+                      "ле10.png", "ле11.png", "ле12.png")
         for img2 in img_names2:
             all_imgs2.append(pygame.image.load(img2))
+        for img3 in img_names3:
+            all_imgs3.append(pygame.image.load(img3).convert_alpha())
         clock = pygame.time.Clock()
         running = True
         while running:
@@ -160,6 +179,8 @@ def ACT1_5():
             if move[pygame.K_LEFT] and x > 20:
                 x -= speed
                 player = playerL
+                player = all_imgs3[z1]
+                z1 += 1
             elif move[pygame.K_RIGHT] and x <= 1250:
                 x += speed
                 player = all_imgs2[c1]
@@ -172,6 +193,8 @@ def ACT1_5():
                 c = 0
             if c1 == 13:
                 c1 = 0
+            if z1 == 12:
+                z1 = 0
             mouse_pos = pygame.mouse.get_pos()
             screen.blit(background, (background_x, y))
             screen.blit(player, (x, y))
