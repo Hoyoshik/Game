@@ -18,6 +18,9 @@ def ACT1():
         'пр17.png', 'пр18.png', 'пр19.png', 'пр20.png', 'пр21.png', 'пр22.png', 'пр23.png', 'пр24.png')
     img_names3 = ("ле1.png", "ле2.png", "ле3.png", "ле4.png", "ле5.png", "ле6.png", "ле7.png", "ле8.png", "ле9.png",
                   "ле10.png", "ле11.png", "ле12.png")
+    img_gr = (
+    "гр1.png", "гр2.png", "гр3.png", "гр4.png", "гр5.png", "гр6.png", "гр7.png", "гр8.png", "гр9.png", "гр10.png",
+    "гр11.png", "гр12.png")
     if __name__ == '__main__':
         screen = pygame.display.set_mode(size)
         pygame.display.flip()
@@ -38,15 +41,21 @@ def ACT1():
         c1 = 0
         z = 0
         z1 = 0
+        gr = 0
+
         all_imgs = list()
         all_imgs2 = list()
         all_imgs3 = list()
+        all_imgsGr = list()
+
         for img in img_names:
             all_imgs.append(pygame.image.load(img).convert_alpha())
         for img2 in img_names2:
             all_imgs2.append(pygame.image.load(img2).convert_alpha())
         for img3 in img_names3:
             all_imgs3.append(pygame.image.load(img3).convert_alpha())
+        for imgGr in img_gr:
+            all_imgsGr.append(pygame.image.load(imgGr).convert_alpha())
         clock = pygame.time.Clock()
         running = True
         grDead = False
@@ -99,6 +108,8 @@ def ACT1():
                 keyshow = True
             if grDead:
                 dedx -= speed
+                playerDED = all_imgsGr[gr]
+                gr += 1
 
             if move[pygame.K_SPACE] and x < 1260 and keyshow:
                 inventarkey = True
@@ -115,6 +126,8 @@ def ACT1():
                 c1 = 0
             if z1 == 12:
                 z1 = 0
+            if gr == 12:
+                gr = 0
             screen.blit(background, (background_x, y))
 
             if keyshow:
@@ -152,7 +165,6 @@ def ACT1_5():
         z1 = 0
         all_imgs2 = list()
         all_imgs3 = list()
-
         img_names2 = (
             'пр1.png', 'пр2.png', 'пр3.png', 'пр4.png', 'пр5.png', 'пр6.png', 'пр7.png',
             'пр8.png', 'пр9.png', 'пр10.png', 'пр11.png', 'пр12.png', 'пр13.png', 'пр14.png', 'пр15.png', 'пр16.png',
