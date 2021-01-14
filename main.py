@@ -6,6 +6,9 @@ import PREVIEW
 
 
 def ACT1():
+    pygame.mixer.music.load('Звуки и музыка\дождь.mp3')
+    s = pygame.mixer.Sound('Звуки и музыка\шаг.ogg')
+    s.set_volume(0.1)
     playerR = pygame.image.load('персонаж.png').convert_alpha()
     playerL = pygame.image.load('персонаж2.png').convert_alpha()
     background = pygame.image.load('фон3.png').convert_alpha()
@@ -28,7 +31,7 @@ def ACT1():
         background_x = 0
         dedx = 2000
 
-        keyx = 2000
+        keyx = 600
         keyshow = False
 
         inventarkey = False
@@ -39,7 +42,6 @@ def ACT1():
         speed = 20
         c = 0
         c1 = 0
-        z = 0
         z1 = 0
         gr = 0
 
@@ -59,13 +61,15 @@ def ACT1():
         clock = pygame.time.Clock()
         running = True
         grDead = False
-        hp1ded = False
-        flag = False
-        mainloop = True
-        chis = 0
+        H = 0
         schetpi = 0
+        roun = "right"
+        pygame.mixer.music.play(-1)
         while running:
-            player = playerR
+            if roun == 'right':
+                player = playerR
+            else:
+                player = playerL
             clock.tick(12)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -75,41 +79,42 @@ def ACT1():
                     pygame.display.flip()
             move = pygame.key.get_pressed()
             y = 0
-            if dedx != 1380:
+            if x != 640 or H == 1:
                 if move[pygame.K_LEFT] and x > 20:
                     x -= speed
-                    player = playerL
                     player = all_imgs3[z1]
                     z1 += 1
+                    roun = "left"
                 elif move[pygame.K_RIGHT] and x <= 1250:
                     x += speed
                     player = all_imgs2[c1]
                     c1 += 1
+                    roun = "right"
                 elif move[pygame.K_RIGHT] and x >= 1250 and background_x != -1300:
                     background_x -= speed
                     dedx -= speed
                     keyx -= speed
                     player = all_imgs2[c1]
                     c1 += 1
+                    roun = "right"
                 elif move[pygame.K_LEFT] and x <= 20 and background_x < 0:
-                    player = playerL
                     background_x += speed
                     player = all_imgs3[z1]
                     z1 += 1
                     dedx += 30
                     keyx += speed
-            elif x == 1260 and schetpi < 1:
-                screen.fill((0, 0, 0))
-                pygame.display.update()
-                schetpi += 1
-                BATTLE_DED()
+                    roun = "left"
             elif schetpi > 0:
                 grDead = True
                 keyshow = True
+
             if grDead:
                 dedx -= speed
                 playerDED = all_imgsGr[gr]
                 gr += 1
+                if dedx < -1000:
+                    print('!')
+                    H = 1
 
             if move[pygame.K_SPACE] and x < 1260 and keyshow:
                 inventarkey = True
@@ -119,17 +124,34 @@ def ACT1():
                 ACT1_5()
                 pygame.quit()
 
+            elif x == 640 and H != 1:
+                if dedx != 700:
+                    dedx -= speed
+                    playerDED = all_imgsGr[gr]
+                    if gr != 12:
+                        gr += 1
+                    elif gr == 12:
+                        gr = 0
+                else:
+                    gr = 0
+                    screen.fill((0, 0, 0))
+                    pygame.display.update()
+                    schetpi += 1
+                    BATTLE_DED()
+
             c += 1
             if c == 8:
                 c = 0
-            if c1 == 24:
+            if c1 == 12:
                 c1 = 0
             if z1 == 12:
                 z1 = 0
             if gr == 12:
                 gr = 0
-            screen.blit(background, (background_x, y))
+            if ((c1 == 1 or c1 == 6) or (z1 == 1 or z1 == 6)) and (player != playerL and player != playerR):
+                s.play()
 
+            screen.blit(background, (background_x, y))
             if keyshow:
                 screen.blit(key, (keyx, 800))
             screen.blit(player, (x, y))
@@ -138,14 +160,14 @@ def ACT1():
             screen.blit(IMAGE, mouse_pos)
             screen.blit(all_imgs[c], (background_x, y))
 
+            print(x)
             if textstart:
-                draw_text('попадите в Дом', pygame.font.Font('20031 (1).otf', 20), (255, 255, 255), screen, 20, 20)
+                draw_text('попадите в дом', pygame.font.Font('20031 (1).otf', 20), (255, 255, 255), screen, 20, 20)
             if x == 1260 and inventarkey:
                 textstart = False
                 draw_text('откройте дверь', pygame.font.Font('20031 (1).otf', 20), (255, 255, 255), screen, 20, 20)
 
             pygame.display.update()
-            print(x)
         pygame.quit()
 
 
@@ -178,19 +200,19 @@ def ACT1_5():
         clock = pygame.time.Clock()
         running = True
         while running:
+            print(x)
             player = playerR
             clock.tick(12)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                    main_menu()
+                    #main_menu()
                 else:
                     pygame.display.flip()
             move = pygame.key.get_pressed()
             y = 0
             if move[pygame.K_LEFT] and x > 20:
                 x -= speed
-                player = playerL
                 player = all_imgs3[z1]
                 z1 += 1
             elif move[pygame.K_RIGHT] and x <= 1250:
@@ -199,7 +221,10 @@ def ACT1_5():
                 c1 += 1
             elif move[pygame.K_RIGHT] and x >= 1250:
                 player = all_imgs2[c1]
-                c1 += 1
+
+            if move[pygame.K_SPACE] and x < 100:
+                ACT1_5_2()
+
             c += 1
             if c == 8:
                 c = 0
@@ -207,11 +232,80 @@ def ACT1_5():
                 c1 = 0
             if z1 == 12:
                 z1 = 0
+
             mouse_pos = pygame.mouse.get_pos()
             screen.blit(background, (background_x, y))
             screen.blit(player, (x, y))
             screen.blit(IMAGE, mouse_pos)
             pygame.display.update()
+        pygame.quit()
+
+def ACT1_5_2():
+    if __name__ == '__main__':
+        screen = pygame.display.set_mode(size)
+        pygame.display.flip()
+        pygame.mouse.set_visible(False)
+        playerR = pygame.image.load('персонаж.png').convert_alpha()
+        playerL = pygame.image.load('персонаж2.png').convert_alpha()
+        background = pygame.image.load('фон3.png').convert_alpha()
+        background_x = 0
+        x = 20
+        speed = 20
+        c = 0
+        c1 = 0
+        z1 = 0
+        all_imgs2 = list()
+        all_imgs3 = list()
+        img_names2 = (
+            'пр1.png', 'пр2.png', 'пр3.png', 'пр4.png', 'пр5.png', 'пр6.png', 'пр7.png',
+            'пр8.png', 'пр9.png', 'пр10.png', 'пр11.png', 'пр12.png', 'пр13.png', 'пр14.png', 'пр15.png', 'пр16.png',
+            'пр17.png', 'пр18.png', 'пр19.png', 'пр20.png', 'пр21.png', 'пр22.png', 'пр23.png', 'пр24.png')
+        img_names3 = ("ле1.png", "ле2.png", "ле3.png", "ле4.png", "ле5.png", "ле6.png", "ле7.png", "ле8.png", "ле9.png",
+                      "ле10.png", "ле11.png", "ле12.png")
+        for img2 in img_names2:
+            all_imgs2.append(pygame.image.load(img2))
+        for img3 in img_names3:
+            all_imgs3.append(pygame.image.load(img3).convert_alpha())
+        clock = pygame.time.Clock()
+        running = True
+        player = playerR
+        while running:
+            player = playerR
+            screen.fill((0, 0, 0))
+            clock.tick(12)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+            move = pygame.key.get_pressed()
+            y = 0
+            if move[pygame.K_LEFT] and x > 20:
+                x -= speed
+                player = all_imgs3[z1]
+                z1 += 1
+            elif move[pygame.K_RIGHT] and x <= 1250:
+                x += speed
+                player = all_imgs2[c1]
+                c1 += 1
+            elif move[pygame.K_RIGHT] and x >= 1250 and background_x != -1300:
+                background_x -= speed
+                player = all_imgs2[c1]
+                c1 += 1
+            elif move[pygame.K_LEFT] and x <= 20 and background_x < 0:
+                background_x += speed
+                player = all_imgs3[z1]
+                z1 += 1
+            c += 1
+            if c == 8:
+                c = 0
+            if c1 == 13:
+                c1 = 0
+            if z1 == 12:
+                z1 = 0
+
+            screen.blit(background, (background_x, y))
+            screen.blit(player, (x, y))
+            pygame.display.update()
+        pygame.quit()
         pygame.quit()
 
 
@@ -226,9 +320,9 @@ def draw_text(text, font, color, surface, x, y):
 
 
 def main_menu():
-    pygame.mixer.init()
     pygame.mixer.music.load('МЕЛОДИЯ.mp3')
     pygame.mixer.music.play(-1)
+    pygame.mixer.music.set_volume(0.05)
     while True:
         screen.fill((pygame.Color('Black')))
         screen.blit(background, (0, 0))
@@ -402,7 +496,7 @@ def BATTLE_DED():
         schetpi += 1
     chis = 1
 
-
+pygame.mixer.init()
 pygame.mouse.set_visible(False)
 a, b = 1600, 900
 size = width, height = a, b
@@ -416,5 +510,5 @@ background = pygame.image.load('фон3.png')
 
 but = pygame.transform.scale(pygame.image.load('кнопка.png').convert_alpha(), (400, 100))
 but1 = pygame.transform.scale(pygame.image.load('кнопка1.png').convert_alpha(), (400, 100))
-# PREVIEW.p()
+#PREVIEW.p()
 main_menu()
