@@ -1,5 +1,6 @@
 import pygame
 import sys
+import os
 from pygame.locals import *
 
 import PREVIEW
@@ -9,20 +10,26 @@ def ACT1():
     pygame.mixer.music.load('Звуки и музыка\дождь.mp3')
     s = pygame.mixer.Sound('Звуки и музыка\шаг.ogg')
     s.set_volume(0.1)
-    playerR = pygame.image.load('персонаж.png').convert_alpha()
-    playerL = pygame.image.load('персонаж2.png').convert_alpha()
+    pressspace = pygame.image.load('Спрайты\Элементы интерфейса\НАЖМИТЕ ПРОБЕЛ.png').convert_alpha()
+    playerR = pygame.image.load('Спрайты\Персонаж\персонаж.png').convert_alpha()
+    playerL = pygame.image.load('Спрайты\Персонаж\персонаж2.png').convert_alpha()
     background = pygame.image.load('фон3.png').convert_alpha()
-    playerDED = pygame.image.load('ГробовщикЛ.png').convert_alpha()
+    playerDED = pygame.image.load('Спрайты\Гробовщик\ГробовщикЛ.png').convert_alpha()
     key = pygame.transform.smoothscale(pygame.image.load('Ключ.png').convert_alpha(), (50, 50))
-    img_names = ('0.png', '1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png')
+    img_names = ('0.png', '1.png', '2.png',
+                 '3.png', '4.png', '5.png', '6.png', '7.png')
     img_names2 = (
-        'пр1.png', 'пр2.png', 'пр3.png', 'пр4.png', 'пр5.png', 'пр6.png', 'пр7.png',
-        'пр8.png', 'пр9.png', 'пр10.png', 'пр11.png', 'пр12.png')
-    img_names3 = ("ле1.png", "ле2.png", "ле3.png", "ле4.png", "ле5.png", "ле6.png", "ле7.png", "ле8.png", "ле9.png",
-                  "ле10.png", "ле11.png", "ле12.png")
+        'пр1.png', 'пр2.png', 'пр3.png', 'пр4.png',
+        'пр5.png', 'пр6.png', 'пр7.png',
+        'пр8.png', 'пр9.png', 'пр10.png', 'пр11.png',
+        'пр12.png')
+    img_names3 = ("ле1.png", "ле2.png", "ле3.png", "ле4.png",
+                  "ле5.png", "ле6.png", "ле7.png", "ле8.png",
+                  "ле9.png", "ле10.png", "ле11.png", "ле12.png")
     img_gr = (
-    "гр1.png", "гр2.png", "гр3.png", "гр4.png", "гр5.png", "гр6.png", "гр7.png", "гр8.png", "гр9.png", "гр10.png",
-    "гр11.png", "гр12.png")
+    "Спрайты\гробовщик\гр1.png", "Спрайты\гробовщик\гр2.png", "Спрайты\гробовщик\гр3.png", "Спрайты\гробовщик\гр4.png", "Спрайты\гробовщик\гр5.png",
+    "Спрайты\гробовщик\гр6.png", "Спрайты\гробовщик\гр7.png", "Спрайты\гробовщик\гр8.png", "Спрайты\гробовщик\гр9.png", "Спрайты\гробовщик\гр10.png",
+    "Спрайты\гробовщик\гр11.png", "Спрайты\гробовщик\гр12.png")
     if __name__ == '__main__':
         screen = pygame.display.set_mode(size)
         pygame.display.flip()
@@ -50,11 +57,14 @@ def ACT1():
         all_imgsGr = list()
 
         for img in img_names:
-            all_imgs.append(pygame.image.load(img).convert_alpha())
+            fullname = os.path.join('Спрайты\Дождь', img)
+            all_imgs.append(pygame.image.load(fullname).convert_alpha())
         for img2 in img_names2:
-            all_imgs2.append(pygame.image.load(img2).convert_alpha())
+            fullname1 = os.path.join('Спрайты\Персонаж', 'right', img2)
+            all_imgs2.append(pygame.image.load(fullname1).convert_alpha())
         for img3 in img_names3:
-            all_imgs3.append(pygame.image.load(img3).convert_alpha())
+            fullname3 = os.path.join('Спрайты\Персонаж', 'left', img3)
+            all_imgs3.append(pygame.image.load(fullname3).convert_alpha())
         for imgGr in img_gr:
             all_imgsGr.append(pygame.image.load(imgGr).convert_alpha())
         clock = pygame.time.Clock()
@@ -64,6 +74,10 @@ def ACT1():
         schetpi = 0
         roun = "right"
         pygame.mixer.music.play(-1)
+        g = True
+        image = pygame.image.load('черрный фон.jpg')
+        x1 = 0
+        x2 = 0
         while running:
             if roun == 'right':
                 player = playerR
@@ -115,10 +129,6 @@ def ACT1():
                     print('!')
                     H = 1
 
-            if move[pygame.K_SPACE] and x < 1260 and keyshow:
-                inventarkey = True
-                keyshow = False
-
             if move[pygame.K_SPACE] and x == 1260 and dedx < 100 and inventarkey:
                 ACT1_5()
                 pygame.quit()
@@ -153,18 +163,38 @@ def ACT1():
             screen.blit(background, (background_x, y))
             if keyshow:
                 screen.blit(key, (keyx, 800))
-            screen.blit(player, (x, y))
+            screen.blit(player, (x, 300))
             screen.blit(playerDED, (dedx, y))
             mouse_pos = pygame.mouse.get_pos()
             screen.blit(IMAGE, mouse_pos)
             screen.blit(all_imgs[c], (background_x, y))
 
-            print(x)
+            #маски
+            mask = player.get_rect()
+            mask.x = x
+            mask.y = 300
+
+            maskkey = key.get_rect()
+            maskkey.x = keyx
+            maskkey.y = 800
+
+            if move[pygame.K_SPACE] and keyshow and mask.colliderect(maskkey):
+                inventarkey = True
+                keyshow = False
+
             if textstart:
                 draw_text('попадите в дом', pygame.font.Font('20031 (1).otf', 20), (255, 255, 255), screen, 20, 20)
+            if mask.colliderect(maskkey) and H == 1 and keyshow:
+                screen.blit(pressspace, (0, 0))
             if x == 1260 and inventarkey:
-                textstart = False
-                draw_text('откройте дверь', pygame.font.Font('20031 (1).otf', 20), (255, 255, 255), screen, 20, 20)
+                screen.blit(pressspace, (0, 0))
+
+            if x1 != 920:
+                x1 += 30
+                x2 -= 30
+                screen.blit(image, (x1, 0))
+                screen.blit(image, (x2, 0))
+
 
             pygame.display.update()
         pygame.quit()
@@ -175,12 +205,9 @@ def ACT1_5():
         screen = pygame.display.set_mode(size)
         pygame.display.flip()
         pygame.mouse.set_visible(False)
-        playerR = pygame.image.load('персонаж.png').convert_alpha()
-        playerL = pygame.image.load('персонаж2.png').convert_alpha()
+        playerR = pygame.image.load('Спрайты\Персонаж\персонаж.png').convert_alpha()
+        playerL = pygame.image.load('Спрайты\Персонаж\персонаж2.png').convert_alpha()
         background = pygame.image.load('фон2.png').convert_alpha()
-        pygame.mixer.music.load('Звуки и музыка\дождьдом.mp3')
-        m = pygame.mixer.Sound('Звуки и музыка\шаг.ogg')
-        m.set_volume(0.1)
         background_x = 0
         x = 20
         speed = 20
@@ -191,8 +218,7 @@ def ACT1_5():
         all_imgs3 = list()
         img_names2 = (
             'пр1.png', 'пр2.png', 'пр3.png', 'пр4.png', 'пр5.png', 'пр6.png', 'пр7.png',
-            'пр8.png', 'пр9.png', 'пр10.png', 'пр11.png', 'пр12.png', 'пр13.png', 'пр14.png', 'пр15.png', 'пр16.png',
-            'пр17.png', 'пр18.png', 'пр19.png', 'пр20.png', 'пр21.png', 'пр22.png', 'пр23.png', 'пр24.png')
+            'пр8.png', 'пр9.png', 'пр10.png', 'пр11.png', 'пр12.png')
         img_names3 = ("ле1.png", "ле2.png", "ле3.png", "ле4.png", "ле5.png", "ле6.png", "ле7.png", "ле8.png", "ле9.png",
                       "ле10.png", "ле11.png", "ле12.png")
         for img2 in img_names2:
@@ -201,13 +227,7 @@ def ACT1_5():
             all_imgs3.append(pygame.image.load(img3).convert_alpha())
         clock = pygame.time.Clock()
         running = True
-        roun = 'right'
-        pygame.mixer.music.play(-1)
         while running:
-            if roun == 'right':
-                player = playerR
-            else:
-                player = playerL
             print(x)
             player = playerR
             clock.tick(12)
@@ -223,19 +243,15 @@ def ACT1_5():
                 x -= speed
                 player = all_imgs3[z1]
                 z1 += 1
-                roun = "left"
             elif move[pygame.K_RIGHT] and x <= 1250:
                 x += speed
                 player = all_imgs2[c1]
                 c1 += 1
-                roun = "right"
             elif move[pygame.K_RIGHT] and x >= 1250:
                 player = all_imgs2[c1]
-                roun = "right"
 
             if move[pygame.K_SPACE] and x < 100:
                 ACT1_5_2()
-
 
             c += 1
             if c == 8:
@@ -245,11 +261,9 @@ def ACT1_5():
             if z1 == 12:
                 z1 = 0
 
-            if ((c1 == 1 or c1 == 6) or (z1 == 1 or z1 == 6)) and (player != playerL and player != playerR):
-                m.play()
-
-            screen.blit(player, (x, y))
             mouse_pos = pygame.mouse.get_pos()
+            screen.blit(background, (background_x, y))
+            screen.blit(player, (x, y))
             screen.blit(IMAGE, mouse_pos)
             pygame.display.update()
         pygame.quit()
@@ -343,10 +357,10 @@ def main_menu():
     ty = pygame.image.load('1туман.png').convert_alpha()
     tyx = -4800
     menusp = (
-    'меню.png', 'меню2.png', 'меню4.png', 'меню5.png', 'меню6.png', 'меню7.png', 'меню8.png')
+        'меню.png', 'меню2.png', 'меню4.png', 'меню5.png', 'меню6.png', 'меню7.png', 'меню8.png')
     menu = list()
     tyman = list()
-    colorkey=(255, 255, 255)
+    colorkey = (255, 255, 255)
     for i in menusp:
         menu.append(pygame.image.load(i).convert_alpha())
 
@@ -401,8 +415,6 @@ def main_menu():
         pygame.display.flip()
         pygame.display.update()
         mainClock.tick(60)
-
-
 
 def BATTLE_DED():
     global chis
