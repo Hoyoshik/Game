@@ -216,15 +216,18 @@ def ACT1_5():
         z1 = 0
         all_imgs2 = list()
         all_imgs3 = list()
+
         img_names2 = (
             'пр1.png', 'пр2.png', 'пр3.png', 'пр4.png', 'пр5.png', 'пр6.png', 'пр7.png',
             'пр8.png', 'пр9.png', 'пр10.png', 'пр11.png', 'пр12.png')
         img_names3 = ("ле1.png", "ле2.png", "ле3.png", "ле4.png", "ле5.png", "ле6.png", "ле7.png", "ле8.png", "ле9.png",
                       "ле10.png", "ле11.png", "ле12.png")
         for img2 in img_names2:
-            all_imgs2.append(pygame.image.load(img2))
+            fullname1 = os.path.join('Спрайты\Персонаж', 'right', img2)
+            all_imgs2.append(pygame.image.load(fullname1))
         for img3 in img_names3:
-            all_imgs3.append(pygame.image.load(img3).convert_alpha())
+            fullname2 = os.path.join('Спрайты\Персонаж', 'left', img3)
+            all_imgs3.append(pygame.image.load(fullname2).convert_alpha())
         clock = pygame.time.Clock()
         running = True
         while running:
@@ -256,7 +259,7 @@ def ACT1_5():
             c += 1
             if c == 8:
                 c = 0
-            if c1 == 13:
+            if c1 == 12:
                 c1 = 0
             if z1 == 12:
                 z1 = 0
@@ -349,55 +352,73 @@ def draw_text(text, font, color, surface, x, y):
 
 def main_menu():
     pygame.mixer.music.load('МЕЛОДИЯ.mp3')
-    background = pygame.image.load('меню.png')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.05)
+    s = pygame.mixer.Sound('звук щелчка.ogg')
+
     m = 0
-    t = 0
     ty = pygame.image.load('1туман.png').convert_alpha()
-    tyx = -4800
+    tyx = -300
     menusp = (
         'меню.png', 'меню2.png', 'меню4.png', 'меню5.png', 'меню6.png', 'меню7.png', 'меню8.png')
     menu = list()
-    tyman = list()
-    colorkey = (255, 255, 255)
     for i in menusp:
         menu.append(pygame.image.load(i).convert_alpha())
 
-    clock = pygame.time.Clock()
     while True:
-        tyx += 20
-        clock.tick(12)
+        if tyx == -4800:
+            tyx = -300
+            print(101)
         screen.fill((pygame.Color('Black')))
         screen.blit(background, (0, 0))
         draw_text('главное меню', pygame.font.Font('20031 (1).otf', 50), (255, 255, 255), screen, 20, 20)
         button_1 = pygame.Rect(94, 200, 395, 90)
         button_2 = pygame.Rect(94, 350, 395, 90)
         button_3 = pygame.Rect(94, 500, 395, 90)
-        mx, my = pygame.mouse.get_pos()
 
+        mx, my = pygame.mouse.get_pos()
         screen.blit(menu[m], (0, 0))
         screen.blit(ty, (tyx, 0))
-        if tyx == 0:
-            tyx = -4800
+
+        tyx -= 10
+
         screen.blit(but, (90, 195))
         screen.blit(but, (90, 345))
         screen.blit(but, (90, 495))
 
-        print(tyx)
-
-        if button_1.collidepoint((mx, my)):
-            screen.blit(but1, (90, 195))
-            for event in pygame.event.get():
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    pygame.mixer.music.stop()
-                    ACT1_5()
-                    pygame.quit()
-        if button_2.collidepoint((mx, my)):
-            screen.blit(but1, (90, 345))
         draw_text('начать игру', pygame.font.Font('20031 (1).otf', 50), (255, 255, 255), screen, 120, 224)
         draw_text('продолжить игру', pygame.font.Font('20031 (1).otf', 38), (255, 255, 255), screen, 105, 376)
         draw_text('настройки', pygame.font.Font('20031 (1).otf', 50), (255, 255, 255), screen, 130, 520)
+
+        x = -1600
+        x1 = 1600
+        if button_1.collidepoint((mx, my)):
+            screen.blit(but1, (90, 195))
+            draw_text('начать игру', pygame.font.Font('20031 (1).otf', 50), (255, 255, 255), screen, 120, 224)
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    s.play()
+                    g = True
+                    image = pygame.image.load('черрный фон.jpg')
+                    image2 = image
+                    while g:
+                        if x != 920:
+                            x += 30
+                            x1 -= 30
+                            print(x)
+                            screen.blit(image, (x, 0))
+                            screen.blit(image, (x1, 0))
+                            pygame.display.flip()
+                            pygame.display.update()
+                            mainClock.tick(12)
+                        else:
+                            g = False
+                    pygame.mixer.music.stop()
+                    ACT1()
+                    pygame.quit()
+        if button_2.collidepoint((mx, my)):
+            screen.blit(but1, (90, 345))
+            draw_text('продолжить игру', pygame.font.Font('20031 (1).otf', 38), (255, 255, 255), screen, 105, 376)
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -414,7 +435,7 @@ def main_menu():
         screen.blit(IMAGE, mouse_pos)
         pygame.display.flip()
         pygame.display.update()
-        mainClock.tick(60)
+        mainClock.tick(12)
 
 def BATTLE_DED():
     global chis
