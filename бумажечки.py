@@ -7,9 +7,9 @@ screen = pygame.display.set_mode((1600, 900), 0, 32)
 
 def paper():
     pygame.mixer.init()
-    hellsing = pygame.mixer.Sound('Звуки и музыка\Хеллсинг.ogg')
+    #hellsing = pygame.mixer.Sound('Звуки и музыка\Хеллсинг.ogg')
     deathnote = pygame.mixer.Sound('Звуки и музыка\Тетрадь смерти.ogg')
-    hellsing.set_volume(0.2)
+    #hellsing.set_volume(0.2)
     deathnote.set_volume(0.2)
 
     back = pygame.image.load('фон для бумажек.png').convert_alpha()
@@ -669,7 +669,7 @@ def paper():
                     pg = 0
                     playmusic = False
                     j = 0
-                    hellsing.stop()
+                    #hellsing.stop()
                     deathnote.stop()
 
         screen.fill((0, 0, 0))
@@ -687,7 +687,7 @@ def paper():
                 screen.blit(bom[j], (0, 0))
                 if pg == 1:
                     screen.blit(caset2main, (0, 0))
-                    hellsing.play()
+                    #hellsing.play()
                 else:
                     screen.blit(caset1main, (0, 0))
                     deathnote.play()
@@ -725,10 +725,11 @@ def paper():
             elif pg == 0 and mousexcaset1 == False and mousexcaset2 == False:
                 screen.blit(caset2main, (0, 0))
                 screen.blit(caset1main, (0, 0))
-
+        IMAGE = pygame.image.load('курсор2.png')
+        mouse_pos = pygame.mouse.get_pos()
+        screen.blit(IMAGE, mouse_pos)
         #pygame.draw.rect(screen, pygame.Color('red'), boomboxstoprect)
         #pygame.draw.rect(screen, pygame.Color('blue'), mask1)
         #pygame.draw.rect(screen, pygame.Color('magenta'), mask3)
         pygame.display.update()
         mainClock.tick(60)
-paper()
