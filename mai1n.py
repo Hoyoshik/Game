@@ -14,50 +14,51 @@ class Person:
         self.maxX = maxX
         self.speed = speed
         self.rotation = False  # False - right; True - left
-        
+
         self.rightMoveSprites = list()
         self.currentRightSprite = 0
         self.leftMoveSprites = list()
         self.currentLeftSprite = 0
-        
+
         self.defaultRSprite = pygame.image.load(playerR).convert_alpha()
         self.defaultLSprite = pygame.image.load(playerL).convert_alpha()
-        
+
         self.PlayerSprite = self.defaultRSprite
-        
+
         for img2 in img_names2:
             self.rightMoveSprites.append(pygame.image.load(img2).convert_alpha())
         for img3 in img_names3:
             self.leftMoveSprites.append(pygame.image.load(img3).convert_alpha())
-            
+
     def stepRight(self):
         self.rotation = False
         self.x = min(self.x + self.speed, self.maxX)
         self.PlayerSprite = self.rightMoveSprites[self.currentRightSprite]
         self.currentRightSprite = (self.currentRightSprite + 1) % len(self.rightMoveSprites)
         self.currentLeftSprite = 0
-        
+
     def stepLeft(self):
         self.rotation = True
         self.x = max(self.x - self.speed, self.minX)
         self.PlayerSprite = self.leftMoveSprites[self.currentLeftSprite]
         self.currentLeftSprite = (self.currentLeftSprite + 1) % len(self.leftMoveSprites)
         self.currentRightSprite = 0
-        
+
     def setDefaultSprite(self):
         if self.rotation:
             self.PlayerSprite = self.defaultLSprite
         else:
             self.PlayerSprite = self.defaultRSprite
-    
+
     def getPlayerSprite(self):
         return self.PlayerSprite
-    
+
     def getX(self):
         return self.x
-    
+
     def isPlayMusic(self):
-        return ((self.currentRightSprite == 1 or self.currentRightSprite == 6) or (self.currentLeftSprite == 1 or self.currentLeftSprite == 6)) and \
+        return ((self.currentRightSprite == 1 or self.currentRightSprite == 6) or (
+                    self.currentLeftSprite == 1 or self.currentLeftSprite == 6)) and \
                (self.PlayerSprite != self.defaultRSprite and self.PlayerSprite != self.defaultLSprite)
 
 
@@ -70,7 +71,7 @@ def ACT1_REFORGE():
     key = pygame.transform.smoothscale(pygame.image.load('Ключ.png').convert_alpha(), (50, 50))
     img_names = ('0.png', '1.png', '2.png',
                  '3.png', '4.png', '5.png', '6.png', '7.png')
-    
+
     if __name__ == '__main__':
         screen = pygame.display.set_mode(size)
         pygame.display.flip()
@@ -83,35 +84,51 @@ def ACT1_REFORGE():
         inventarkey = False
 
         textstart = True
-        
+
         speed = 20
         c = 0
 
-        mainPerson = Person(20, #начальная координата x
-                            20, #минимальное значение x
-                            1250, #максимальное значение x
-                            speed, #скорость изменения x
-                            'Спрайты\Персонаж\персонаж.png', #путь к изображению стоящего персонажа вмторящего в правую сторону
-                            'Спрайты\Персонаж\персонаж2.png', #путь к изображению стоящего персонажа вмторящего в левую сторону
-                            ('Спрайты\Персонаж\\right\пр1.png', 'Спрайты\Персонаж\\right\пр2.png', 'Спрайты\Персонаж\\right\пр3.png', 'Спрайты\Персонаж\\right\пр4.png',
-                             'Спрайты\Персонаж\\right\пр5.png', 'Спрайты\Персонаж\\right\пр6.png', 'Спрайты\Персонаж\\right\пр7.png', 'Спрайты\Персонаж\\right\пр8.png', 
-                             'Спрайты\Персонаж\\right\пр9.png', 'Спрайты\Персонаж\\right\пр10.png', 'Спрайты\Персонаж\\right\пр11.png', 'Спрайты\Персонаж\\right\пр12.png'), #изображения для анимации ходьбы в правую сторону
-                            ("Спрайты\Персонаж\\left\ле1.png", "Спрайты\Персонаж\\left\ле2.png", "Спрайты\Персонаж\\left\ле3.png", "Спрайты\Персонаж\\left\ле4.png",
-                             "Спрайты\Персонаж\\left\ле5.png", "Спрайты\Персонаж\\left\ле6.png", "Спрайты\Персонаж\\left\ле7.png", "Спрайты\Персонаж\\left\ле8.png",
-                             "Спрайты\Персонаж\\left\ле9.png", "Спрайты\Персонаж\\left\ле10.png", "Спрайты\Персонаж\\left\ле11.png", "Спрайты\Персонаж\\left\ле12.png") #изображения для анимации ходьбы в левую сторону              
-        ) # главный герой
-        
-        dedPerson = Person(2000, #начальная координата x
-                            -10000, #минимальное значение x
-                            10000, #максимальное значение x
-                            speed, #скорость изменения x
-                            'Спрайты\Гробовщик\Гробовщик.png', #путь к изображению стоящего персонажа вмторящего в правую сторону
-                            'Спрайты\Гробовщик\ГробовщикЛ.png', #путь к изображению стоящего персонажа вмторящего в левую сторону
-                            ('Спрайты\Гробовщик\Гробовщик.png', ), #изображения для анимации ходьбы в правую сторону
-                            ("Спрайты\гробовщик\гр1.png", "Спрайты\гробовщик\гр2.png", "Спрайты\гробовщик\гр3.png", "Спрайты\гробовщик\гр4.png", 
-                             "Спрайты\гробовщик\гр5.png", "Спрайты\гробовщик\гр6.png", "Спрайты\гробовщик\гр7.png", "Спрайты\гробовщик\гр8.png", 
-                             "Спрайты\гробовщик\гр9.png", "Спрайты\гробовщик\гр10.png", "Спрайты\гробовщик\гр11.png", "Спрайты\гробовщик\гр12.png") #изображения для анимации ходьбы в левую сторону              
-        ) # дед
+        mainPerson = Person(20,  # начальная координата x
+                            20,  # минимальное значение x
+                            1250,  # максимальное значение x
+                            speed,  # скорость изменения x
+                            'Спрайты\Персонаж\персонаж.png',
+                            # путь к изображению стоящего персонажа вмторящего в правую сторону
+                            'Спрайты\Персонаж\персонаж2.png',
+                            # путь к изображению стоящего персонажа вмторящего в левую сторону
+                            ('Спрайты\Персонаж\\right\пр1.png', 'Спрайты\Персонаж\\right\пр2.png',
+                             'Спрайты\Персонаж\\right\пр3.png', 'Спрайты\Персонаж\\right\пр4.png',
+                             'Спрайты\Персонаж\\right\пр5.png', 'Спрайты\Персонаж\\right\пр6.png',
+                             'Спрайты\Персонаж\\right\пр7.png', 'Спрайты\Персонаж\\right\пр8.png',
+                             'Спрайты\Персонаж\\right\пр9.png', 'Спрайты\Персонаж\\right\пр10.png',
+                             'Спрайты\Персонаж\\right\пр11.png', 'Спрайты\Персонаж\\right\пр12.png'),
+                            # изображения для анимации ходьбы в правую сторону
+                            ("Спрайты\Персонаж\\left\ле1.png", "Спрайты\Персонаж\\left\ле2.png",
+                             "Спрайты\Персонаж\\left\ле3.png", "Спрайты\Персонаж\\left\ле4.png",
+                             "Спрайты\Персонаж\\left\ле5.png", "Спрайты\Персонаж\\left\ле6.png",
+                             "Спрайты\Персонаж\\left\ле7.png", "Спрайты\Персонаж\\left\ле8.png",
+                             "Спрайты\Персонаж\\left\ле9.png", "Спрайты\Персонаж\\left\ле10.png",
+                             "Спрайты\Персонаж\\left\ле11.png", "Спрайты\Персонаж\\left\ле12.png")
+                            # изображения для анимации ходьбы в левую сторону
+                            )  # главный герой
+
+        dedPerson = Person(2000,  # начальная координата x
+                           -10000,  # минимальное значение x
+                           10000,  # максимальное значение x
+                           speed,  # скорость изменения x
+                           'Спрайты\Гробовщик\Гробовщик.png',
+                           # путь к изображению стоящего персонажа вмторящего в правую сторону
+                           'Спрайты\Гробовщик\ГробовщикЛ.png',
+                           # путь к изображению стоящего персонажа вмторящего в левую сторону
+                           ('Спрайты\Гробовщик\Гробовщик.png',),  # изображения для анимации ходьбы в правую сторону
+                           ("Спрайты\гробовщик\гр1.png", "Спрайты\гробовщик\гр2.png", "Спрайты\гробовщик\гр3.png",
+                            "Спрайты\гробовщик\гр4.png",
+                            "Спрайты\гробовщик\гр5.png", "Спрайты\гробовщик\гр6.png", "Спрайты\гробовщик\гр7.png",
+                            "Спрайты\гробовщик\гр8.png",
+                            "Спрайты\гробовщик\гр9.png", "Спрайты\гробовщик\гр10.png", "Спрайты\гробовщик\гр11.png",
+                            "Спрайты\гробовщик\гр12.png")
+                           # изображения для анимации ходьбы в левую сторону
+                           )  # дед
 
         all_imgs = list()
         all_imgsGr = list()
@@ -129,6 +146,7 @@ def ACT1_REFORGE():
         image = pygame.image.load('черрный фон.jpg')
         x1 = 0
         x2 = 0
+        PREVIEW.act1preview()
         while running:
             mainPerson.setDefaultSprite()
             clock.tick(12)
@@ -195,12 +213,12 @@ def ACT1_REFORGE():
             screen.blit(player, (x, 300))
 
             screen.blit(playerDED, (dedx, y))
-            
+
             mouse_pos = pygame.mouse.get_pos()
             screen.blit(IMAGE, mouse_pos)
             screen.blit(all_imgs[c], (background_x, y))
 
-            #маски
+            # маски
             mask = player.get_rect()
             mask.x = x
             mask.y = 300
@@ -228,7 +246,10 @@ def ACT1_REFORGE():
             pygame.display.update()
         pygame.quit()
 
+
 def ACT1_5():
+    IMAGE = pygame.image.load('курсор2.png')
+    mouse_pos = pygame.mouse.get_pos()
     pygame.mixer.music.load('Звуки и музыка\дождьдом.mp3')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.05)
@@ -277,7 +298,6 @@ def ACT1_5():
         grDead = False
         H = 0
         schetpi = 0
-        pygame.mixer.music.play(-1)
         g = True
         image = pygame.image.load('черрный фон.jpg')
         x1 = 0
@@ -319,14 +339,11 @@ def ACT1_5():
             if move[pygame.K_SPACE] and mask.colliderect(table):
                 бумажечки.paper()
 
-
-            print(x)
-
             if textstart:
                 draw_text('попадите в дом', pygame.font.Font('20031 (1).otf', 20), (255, 255, 255), screen, 20, 20)
-            pygame.draw.rect(screen, pygame.Color('red'), table)
             pygame.display.update()
         pygame.quit()
+
 
 def ACT1_5_2():
     pygame.mixer.music.load('Звуки и музыка\дождьдом.mp3')
@@ -417,12 +434,10 @@ def ACT1_5_2():
             mask.x = x
             mask.y = 300
 
-
             print(x)
 
             if textstart:
                 draw_text('попадите в дом', pygame.font.Font('20031 (1).otf', 20), (255, 255, 255), screen, 20, 20)
-
 
             pygame.display.update()
         pygame.quit()
@@ -442,7 +457,7 @@ def main_menu():
     pygame.mixer.music.load('МЕЛОДИЯ.mp3')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.05)
-    #s = pygame.mixer.Sound('звук щелчка.ogg')
+    # s = pygame.mixer.Sound('звук щелчка.ogg')
 
     m = 0
     ty = pygame.image.load('1туман.png').convert_alpha()
@@ -484,7 +499,7 @@ def main_menu():
             draw_text('начать игру', pygame.font.Font('20031 (1).otf', 50), (255, 255, 255), screen, 120, 224)
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    #s.play()
+                    # s.play()
                     g = True
                     image = pygame.image.load('черрный фон.jpg')
                     image2 = image
@@ -500,8 +515,7 @@ def main_menu():
                         else:
                             g = False
                     pygame.mixer.music.stop()
-                    ACT1_5()
-                    #ACT1_REFORGE()
+                    ACT1_REFORGE()
                     pygame.quit()
         if button_2.collidepoint((mx, my)):
             screen.blit(but1, (90, 345))
@@ -523,6 +537,7 @@ def main_menu():
         pygame.display.flip()
         pygame.display.update()
         mainClock.tick(12)
+
 
 def BATTLE_DED():
     global chis
@@ -653,6 +668,7 @@ def BATTLE_DED():
         schetpi += 1
     chis = 1
 
+
 pygame.mixer.init()
 pygame.mouse.set_visible(False)
 a, b = 1600, 900
@@ -667,7 +683,5 @@ background = pygame.image.load('фон3.png')
 
 but = pygame.transform.scale(pygame.image.load('кнопка.png').convert_alpha(), (400, 100))
 but1 = pygame.transform.scale(pygame.image.load('кнопка1.png').convert_alpha(), (400, 100))
-#PREVIEW.p()
-#main_menu()
-ACT1_5()
-
+PREVIEW.p()
+main_menu()
