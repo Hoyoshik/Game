@@ -253,6 +253,8 @@ document = 0
 
 def ACT1_5():
     global coat, uslovie, document
+    if document == 1:
+        print(101)
     pygame.init()
     pygame.mixer.music.load('Звуки и музыка\дождьдом.mp3')
     pygame.mixer.music.play(-1)
@@ -261,11 +263,11 @@ def ACT1_5():
     s.set_volume(0.1)
     pressspace = pygame.image.load('Спрайты\Элементы интерфейса\НАЖМИТЕ ПРОБЕЛ.png').convert_alpha()
     background = pygame.image.load('фон2.png').convert_alpha()
-    backgroundwithout = pygame.image.load('фон22.png')
+    backgroundwithout = pygame.image.load('фон22.png').convert_alpha()
     table = pygame.Rect(600, 500, 480, 250)
     seif = pygame.Rect(1280, 400, 150, 200)
     paltishko = pygame.Rect(265, 200, 150, 600)
-    palto = 0
+    door = pygame.Rect(60, 300, 220, 400)
     pal = True
     uslovie = 0
     if __name__ == '__main__':
@@ -274,10 +276,6 @@ def ACT1_5():
         pygame.mouse.set_visible(False)
         background_x = 0
         speed = 20
-        if palto == 1:
-            uslovie += 1
-        elif document == 1:
-            uslovie += 1
         if spavn == 0:
             mainPerson = Person(20,  # начальная координата x
                                 20,  # минимальное значение x
@@ -331,8 +329,6 @@ def ACT1_5():
         clock = pygame.time.Clock()
         running = True
         pygame.mixer.music.play(-1)
-        g = True
-        image = pygame.image.load('черрный фон.jpg')
         while running:
             mainPerson.setDefaultSprite()
             clock.tick(12)
@@ -355,7 +351,6 @@ def ACT1_5():
             if mainPerson.isPlayMusic():
                 s.play()
             if move[pygame.K_SPACE] and mask.colliderect(paltishko):
-                palto = 1
                 coat = 1
             if coat == 1:
                 pal = False
@@ -374,8 +369,16 @@ def ACT1_5():
                 бумажечки.paper()
             if move[pygame.K_SPACE] and mask.colliderect(seif):
                 saif()
+            if move[pygame.K_SPACE] and mask.colliderect(door) and uslovie == 2:
+                ACT1_5_2()
+                pygame.quit()
+            if coat == 1:
+                uslovie = 1
+            if document == 1:
+                uslovie = 2
             #pygame.draw.rect(screen, pygame.Color('red'), seif)
             #pygame.draw.rect(screen, pygame.Color('red'), paltishko)
+            #pygame.draw.rect(screen, pygame.Color('red'), door)
             pygame.display.update()
         pygame.quit()
 
@@ -388,7 +391,7 @@ def ACT1_5_2():
     s = pygame.mixer.Sound('Звуки и музыка\шаг.ogg')
     s.set_volume(0.1)
     pressspace = pygame.image.load('Спрайты\Элементы интерфейса\НАЖМИТЕ ПРОБЕЛ.png').convert_alpha()
-    background = pygame.image.load('фон2.png').convert_alpha()
+    background = pygame.image.load('фон3.png').convert_alpha()
     if __name__ == '__main__':
         screen = pygame.display.set_mode(size)
         pygame.display.flip()
@@ -396,7 +399,6 @@ def ACT1_5_2():
         background_x = 0
         textstart = True
         speed = 20
-        c = 0
         mainPerson = Person(20,  # начальная координата x
                             20,  # минимальное значение x
                             1250,  # максимальное значение x
@@ -420,19 +422,10 @@ def ACT1_5_2():
                              "Спрайты\Персонаж\\left\ле11.png", "Спрайты\Персонаж\\left\ле12.png")
                             # изображения для анимации ходьбы в левую сторону
                             )  # главный герой
-
-        all_imgs = list()
-        all_imgsGr = list()
         clock = pygame.time.Clock()
         running = True
-        grDead = False
-        H = 0
-        schetpi = 0
         pygame.mixer.music.play(-1)
         g = True
-        image = pygame.image.load('черрный фон.jpg')
-        x1 = 0
-        x2 = 0
         while running:
             mainPerson.setDefaultSprite()
             clock.tick(12)
@@ -452,17 +445,12 @@ def ACT1_5_2():
                 mainPerson.stepRight()
 
             player = mainPerson.getPlayerSprite()
-
             if mainPerson.isPlayMusic():
                 s.play()
-
             screen.blit(background, (background_x, y))
-
             screen.blit(player, (x, 300))
-
             mouse_pos = pygame.mouse.get_pos()
             screen.blit(IMAGE, mouse_pos)
-
             # маски
             mask = player.get_rect()
             mask.x = x
@@ -713,7 +701,7 @@ def BATTLE_DED():
 def saif():
     global spavn
     spavn += 1
-    backgroung = pygame.image.load('сейф.png')
+    backgroung = pygame.image.load('сейф.png').convert_alpha()
     if __name__ == '__main__':
         pygame.display.flip()
         clock = pygame.time.Clock()
@@ -742,7 +730,7 @@ def saif():
 def consolka():
     global spavn
     spavn += 1
-    background = pygame.image.load('черрный фон.jpg')
+    background = pygame.image.load('черрный фон.jpg').convert_alpha()
     maskcon1 = pygame.Rect(550, 250, 140, 140)
     maskcon2 = pygame.Rect(692, 250, 140, 140)
     maskcon3 = pygame.Rect(834, 250, 140, 140)
@@ -895,8 +883,8 @@ def seifopen():
     seifopen.counter = 1
     if spavn == 1:
         print(101)
-    backgroung = pygame.image.load('сейф внутри.png')
-    backgroungwithout = pygame.image.load('сейф внутри2.png')
+    backgroung = pygame.image.load('сейф внутри.png').convert_alpha()
+    backgroungwithout = pygame.image.load('сейф внутри2.png').convert_alpha()
     if __name__ == '__main__':
         pygame.display.flip()
         clock = pygame.time.Clock()
@@ -933,7 +921,7 @@ mainClock = pygame.time.Clock()
 font = pygame.font.SysFont(None, 20)
 
 click = False
-background = pygame.image.load('фон3.png')
+background = pygame.image.load('фон3.png').convert_alpha()
 
 but = pygame.transform.scale(pygame.image.load('кнопка.png').convert_alpha(), (400, 100))
 but1 = pygame.transform.scale(pygame.image.load('кнопка1.png').convert_alpha(), (400, 100))
