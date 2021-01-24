@@ -58,11 +58,12 @@ class Person:
 
     def isPlayMusic(self):
         return ((self.currentRightSprite == 1 or self.currentRightSprite == 6) or (
-                    self.currentLeftSprite == 1 or self.currentLeftSprite == 6)) and \
+                self.currentLeftSprite == 1 or self.currentLeftSprite == 6)) and \
                (self.PlayerSprite != self.defaultRSprite and self.PlayerSprite != self.defaultLSprite)
 
 
 def ACT1_REFORGE():
+    pygame.init()
     pygame.mixer.music.load('Звуки и музыка\дождь.mp3')
     s = pygame.mixer.Sound('Звуки и музыка\шаг.ogg')
     s.set_volume(0.1)
@@ -246,10 +247,10 @@ def ACT1_REFORGE():
             pygame.display.update()
         pygame.quit()
 
+spavn = 0
 
 def ACT1_5():
-    IMAGE = pygame.image.load('курсор2.png')
-    mouse_pos = pygame.mouse.get_pos()
+    pygame.init()
     pygame.mixer.music.load('Звуки и музыка\дождьдом.mp3')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.05)
@@ -258,7 +259,8 @@ def ACT1_5():
     pressspace = pygame.image.load('Спрайты\Элементы интерфейса\НАЖМИТЕ ПРОБЕЛ.png').convert_alpha()
     background = pygame.image.load('фон2.png').convert_alpha()
     table = pygame.Rect(600, 500, 480, 250)
-    key = pygame.transform.smoothscale(pygame.image.load('Ключ.png').convert_alpha(), (50, 50))
+    seif = pygame.Rect(1280, 400, 150, 200)
+    paltishko = pygame.Rect(200, 400, 150, 600)
     if __name__ == '__main__':
         screen = pygame.display.set_mode(size)
         pygame.display.flip()
@@ -267,41 +269,63 @@ def ACT1_5():
         textstart = True
         speed = 20
         c = 0
-        mainPerson = Person(20,  # начальная координата x
-                            20,  # минимальное значение x
-                            1250,  # максимальное значение x
-                            speed,  # скорость изменения x
-                            'Спрайты\Персонаж\персонаж.png',
-                            # путь к изображению стоящего персонажа вмторящего в правую сторону
-                            'Спрайты\Персонаж\персонаж2.png',
-                            # путь к изображению стоящего персонажа вмторящего в левую сторону
-                            ('Спрайты\Персонаж\\right\пр1.png', 'Спрайты\Персонаж\\right\пр2.png',
-                             'Спрайты\Персонаж\\right\пр3.png', 'Спрайты\Персонаж\\right\пр4.png',
-                             'Спрайты\Персонаж\\right\пр5.png', 'Спрайты\Персонаж\\right\пр6.png',
-                             'Спрайты\Персонаж\\right\пр7.png', 'Спрайты\Персонаж\\right\пр8.png',
-                             'Спрайты\Персонаж\\right\пр9.png', 'Спрайты\Персонаж\\right\пр10.png',
-                             'Спрайты\Персонаж\\right\пр11.png', 'Спрайты\Персонаж\\right\пр12.png'),
-                            # изображения для анимации ходьбы в правую сторону
-                            ("Спрайты\Персонаж\\left\ле1.png", "Спрайты\Персонаж\\left\ле2.png",
-                             "Спрайты\Персонаж\\left\ле3.png", "Спрайты\Персонаж\\left\ле4.png",
-                             "Спрайты\Персонаж\\left\ле5.png", "Спрайты\Персонаж\\left\ле6.png",
-                             "Спрайты\Персонаж\\left\ле7.png", "Спрайты\Персонаж\\left\ле8.png",
-                             "Спрайты\Персонаж\\left\ле9.png", "Спрайты\Персонаж\\left\ле10.png",
-                             "Спрайты\Персонаж\\left\ле11.png", "Спрайты\Персонаж\\left\ле12.png")
-                            # изображения для анимации ходьбы в левую сторону
-                            )  # главный герой
+        global uslovie
+        uslovie = False
+        if spavn == 0:
+            mainPerson = Person(20,  # начальная координата x
+                                20,  # минимальное значение x
+                                1250,  # максимальное значение x
+                                speed,  # скорость изменения x
+                                'Спрайты\Персонаж\персонаж.png',
+                                # путь к изображению стоящего персонажа вмторящего в правую сторону
+                                'Спрайты\Персонаж\персонаж2.png',
+                                # путь к изображению стоящего персонажа вмторящего в левую сторону
+                                ('Спрайты\Персонаж\\right\пр1.png', 'Спрайты\Персонаж\\right\пр2.png',
+                                 'Спрайты\Персонаж\\right\пр3.png', 'Спрайты\Персонаж\\right\пр4.png',
+                                 'Спрайты\Персонаж\\right\пр5.png', 'Спрайты\Персонаж\\right\пр6.png',
+                                 'Спрайты\Персонаж\\right\пр7.png', 'Спрайты\Персонаж\\right\пр8.png',
+                                 'Спрайты\Персонаж\\right\пр9.png', 'Спрайты\Персонаж\\right\пр10.png',
+                                 'Спрайты\Персонаж\\right\пр11.png', 'Спрайты\Персонаж\\right\пр12.png'),
+                                # изображения для анимации ходьбы в правую сторону
+                                ("Спрайты\Персонаж\\left\ле1.png", "Спрайты\Персонаж\\left\ле2.png",
+                                 "Спрайты\Персонаж\\left\ле3.png", "Спрайты\Персонаж\\left\ле4.png",
+                                 "Спрайты\Персонаж\\left\ле5.png", "Спрайты\Персонаж\\left\ле6.png",
+                                 "Спрайты\Персонаж\\left\ле7.png", "Спрайты\Персонаж\\left\ле8.png",
+                                 "Спрайты\Персонаж\\left\ле9.png", "Спрайты\Персонаж\\left\ле10.png",
+                                 "Спрайты\Персонаж\\left\ле11.png", "Спрайты\Персонаж\\left\ле12.png")
+                                # изображения для анимации ходьбы в левую сторону
+                                )  # главный герой
+        if spavn > 0:
+            print(1)
+            mainPerson = Person(1200,  # начальная координата x
+                                20,  # минимальное значение x
+                                1250,  # максимальное значение x
+                                speed,  # скорость изменения x
+                                'Спрайты\Персонаж\персонаж.png',
+                                # путь к изображению стоящего персонажа вмторящего в правую сторону
+                                'Спрайты\Персонаж\персонаж2.png',
+                                # путь к изображению стоящего персонажа вмторящего в левую сторону
+                                ('Спрайты\Персонаж\\right\пр1.png', 'Спрайты\Персонаж\\right\пр2.png',
+                                 'Спрайты\Персонаж\\right\пр3.png', 'Спрайты\Персонаж\\right\пр4.png',
+                                 'Спрайты\Персонаж\\right\пр5.png', 'Спрайты\Персонаж\\right\пр6.png',
+                                 'Спрайты\Персонаж\\right\пр7.png', 'Спрайты\Персонаж\\right\пр8.png',
+                                 'Спрайты\Персонаж\\right\пр9.png', 'Спрайты\Персонаж\\right\пр10.png',
+                                 'Спрайты\Персонаж\\right\пр11.png', 'Спрайты\Персонаж\\right\пр12.png'),
+                                # изображения для анимации ходьбы в правую сторону
+                                ("Спрайты\Персонаж\\left\ле1.png", "Спрайты\Персонаж\\left\ле2.png",
+                                 "Спрайты\Персонаж\\left\ле3.png", "Спрайты\Персонаж\\left\ле4.png",
+                                 "Спрайты\Персонаж\\left\ле5.png", "Спрайты\Персонаж\\left\ле6.png",
+                                 "Спрайты\Персонаж\\left\ле7.png", "Спрайты\Персонаж\\left\ле8.png",
+                                 "Спрайты\Персонаж\\left\ле9.png", "Спрайты\Персонаж\\left\ле10.png",
+                                 "Спрайты\Персонаж\\left\ле11.png", "Спрайты\Персонаж\\left\ле12.png")
+                                # изображения для анимации ходьбы в левую сторону
+                                )  # главный герой
 
-        all_imgs = list()
-        all_imgsGr = list()
         clock = pygame.time.Clock()
         running = True
-        grDead = False
-        H = 0
-        schetpi = 0
+        pygame.mixer.music.play(-1)
         g = True
         image = pygame.image.load('черрный фон.jpg')
-        x1 = 0
-        x2 = 0
         while running:
             mainPerson.setDefaultSprite()
             clock.tick(12)
@@ -311,6 +335,8 @@ def ACT1_5():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                    pygame.quit()
+                    sys.exit()
                     main_menu()
                 else:
                     pygame.display.flip()
@@ -318,34 +344,31 @@ def ACT1_5():
                 mainPerson.stepLeft()
             elif move[pygame.K_RIGHT] and x < 1250:
                 mainPerson.stepRight()
-
             player = mainPerson.getPlayerSprite()
-
             if mainPerson.isPlayMusic():
                 s.play()
-
             screen.blit(background, (background_x, y))
-
             screen.blit(player, (x, 300))
-
             mouse_pos = pygame.mouse.get_pos()
             screen.blit(IMAGE, mouse_pos)
-
             # маски
             mask = player.get_rect()
             mask.x = x
             mask.y = 300
-
             if move[pygame.K_SPACE] and mask.colliderect(table):
                 бумажечки.paper()
-
-            if textstart:
-                draw_text('попадите в дом', pygame.font.Font('20031 (1).otf', 20), (255, 255, 255), screen, 20, 20)
+            if move[pygame.K_SPACE] and mask.colliderect(seif):
+                saif()
+            if uslovie == True:
+                print(1)
+            pygame.draw.rect(screen, pygame.Color('red'), seif)
+            pygame.draw.rect(screen, pygame.Color('red'), paltishko)
             pygame.display.update()
         pygame.quit()
 
 
 def ACT1_5_2():
+    pygame.init()
     pygame.mixer.music.load('Звуки и музыка\дождьдом.mp3')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.05)
@@ -353,8 +376,6 @@ def ACT1_5_2():
     s.set_volume(0.1)
     pressspace = pygame.image.load('Спрайты\Элементы интерфейса\НАЖМИТЕ ПРОБЕЛ.png').convert_alpha()
     background = pygame.image.load('фон2.png').convert_alpha()
-    table = pygame.Rect(4600, 500, 460, 480)
-    key = pygame.transform.smoothscale(pygame.image.load('Ключ.png').convert_alpha(), (50, 50))
     if __name__ == '__main__':
         screen = pygame.display.set_mode(size)
         pygame.display.flip()
@@ -447,6 +468,14 @@ IMAGE = pygame.image.load('курсор2.png')
 
 
 def draw_text(text, font, color, surface, x, y):
+    textobj = font.render(text, 1, color)
+    textrect = textobj.get_rect()
+    textrect.topleft = (x, y)
+    surface.blit(textobj, textrect)
+
+
+def draw_textConsolka(text, font, color, surface, x, y):
+    color = pygame.Color(140, 0, 15)
     textobj = font.render(text, 1, color)
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
@@ -669,6 +698,218 @@ def BATTLE_DED():
     chis = 1
 
 
+def saif():
+    global spavn
+    spavn += 1
+    backgroung = pygame.image.load('сейф.png')
+    if __name__ == '__main__':
+        pygame.display.flip()
+        clock = pygame.time.Clock()
+        running = True
+        maskConsolka = pygame.Rect(630, 396, 130, 130)
+        while running:
+            clock.tick(30)
+            mx, my = pygame.mouse.get_pos()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    ACT1_5()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if maskConsolka.collidepoint(mx, my):
+                        consolka()
+                else:
+                    pygame.display.flip()
+            screen.blit(backgroung, (0, 0))
+            mouse_pos = pygame.mouse.get_pos()
+            screen.blit(IMAGE, mouse_pos)
+            pygame.display.flip()
+            pygame.display.update()
+            # pygame.draw.rect(screen, pygame.Color('blue'), maskConsolka)
+        pygame.quit()
+
+
+def consolka():
+    global spavn
+    spavn += 1
+    background = pygame.image.load('черрный фон.jpg')
+    maskcon1 = pygame.Rect(550, 250, 140, 140)
+    maskcon2 = pygame.Rect(692, 250, 140, 140)
+    maskcon3 = pygame.Rect(834, 250, 140, 140)
+    maskcon4 = pygame.Rect(550, 392, 140, 140)
+    maskcon5 = pygame.Rect(692, 392, 140, 140)
+    maskcon6 = pygame.Rect(834, 392, 140, 140)
+    maskcon7 = pygame.Rect(550, 534, 140, 140)
+    maskcon8 = pygame.Rect(692, 534, 140, 140)
+    maskcon9 = pygame.Rect(834, 534, 140, 140)
+    maskconC = pygame.Rect(550, 676, 140, 140)
+    maskcon0 = pygame.Rect(692, 676, 140, 140)
+    maskconEN = pygame.Rect(834, 676, 140, 140)
+    consol1 = '1'
+    consol2 = '2'
+    consol3 = '3'
+    consol4 = '4'
+    consol5 = '5'
+    consol6 = '6'
+    consol7 = '7'
+    consol8 = '8'
+    consol9 = '9'
+    consolC = 'C'
+    consol0 = '0'
+    consolEN = 'ENTER'
+    simvol = 0
+    consolError = 'ERROR!'
+    uslovie = False
+    if __name__ == '__main__':
+        pygame.display.flip()
+        clock = pygame.time.Clock()
+        running = True
+        textstart = True
+        consol = '000000'
+        kod = '231426'
+        saifopen = False
+        Error = False
+        while running:
+            clock.tick(30)
+            mx, my = pygame.mouse.get_pos()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    ACT1_5()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if maskcon1.collidepoint(mx, my) and simvol < 6:
+                        edit = list(consol)
+                        edit[simvol] = consol1
+                        consol = ''.join(edit)
+                        simvol += 1
+                    if maskcon2.collidepoint(mx, my) and simvol < 6:
+                        edit = list(consol)
+                        edit[simvol] = consol2
+                        consol = ''.join(edit)
+                        simvol += 1
+                    if maskcon3.collidepoint(mx, my) and simvol < 6:
+                        edit = list(consol)
+                        edit[simvol] = consol3
+                        consol = ''.join(edit)
+                        simvol += 1
+                    if maskcon4.collidepoint(mx, my) and simvol < 6:
+                        edit = list(consol)
+                        edit[simvol] = consol4
+                        consol = ''.join(edit)
+                        simvol += 1
+                    if maskcon5.collidepoint(mx, my) and simvol < 6:
+                        edit = list(consol)
+                        edit[simvol] = consol5
+                        consol = ''.join(edit)
+                        simvol += 1
+                    if maskcon6.collidepoint(mx, my) and simvol < 6:
+                        edit = list(consol)
+                        edit[simvol] = consol6
+                        consol = ''.join(edit)
+                        simvol += 1
+                    if maskcon7.collidepoint(mx, my) and simvol < 6:
+                        edit = list(consol)
+                        edit[simvol] = consol7
+                        consol = ''.join(edit)
+                        simvol += 1
+                    if maskcon8.collidepoint(mx, my) and simvol < 6:
+                        edit = list(consol)
+                        edit[simvol] = consol8
+                        consol = ''.join(edit)
+                        simvol += 1
+                    if maskcon9.collidepoint(mx, my) and simvol < 6:
+                        edit = list(consol)
+                        edit[simvol] = consol9
+                        consol = ''.join(edit)
+                        simvol += 1
+                    if maskcon0.collidepoint(mx, my) and simvol < 6:
+                        edit = list(consol)
+                        edit[simvol] = consol0
+                        consol = ''.join(edit)
+                        simvol += 1
+                    if maskconC.collidepoint(mx, my) and simvol < 6 and consol != consolError:
+                        consol = '000000'
+                        simvol = 0
+                    if maskconC.collidepoint(mx, my) and consol == consolError:
+                        consol = '000000'
+                        simvol = 0
+                    if maskconEN.collidepoint(mx, my):
+                        if consol == kod:
+                            saifopen = True
+                            edit = list(consol)
+                            edit = 'OPEN!'
+                            consol = ''.join(edit)
+                            uslovie == True
+                            seifopen()
+                        else:
+                            edit = list(consol)
+                            consol = consolError
+                            simvol = 6
+                else:
+                    pygame.display.flip()
+            screen.blit(background, (0, 0))
+            draw_textConsolka(consol1, pygame.font.Font('7fonts.ru_DS-DIGI.TTF', 200), (255, 405, 255), screen, 550,
+                              220)
+            draw_textConsolka(consol2, pygame.font.Font('7fonts.ru_DS-DIGI.TTF', 200), (255, 405, 255), screen, 700,
+                              220)
+            draw_textConsolka(consol3, pygame.font.Font('7fonts.ru_DS-DIGI.TTF', 200), (255, 405, 255), screen, 850,
+                              220)
+            draw_textConsolka(consol4, pygame.font.Font('7fonts.ru_DS-DIGI.TTF', 200), (255, 405, 255), screen, 550,
+                              360)
+            draw_textConsolka(consol5, pygame.font.Font('7fonts.ru_DS-DIGI.TTF', 200), (255, 405, 255), screen, 700,
+                              360)
+            draw_textConsolka(consol6, pygame.font.Font('7fonts.ru_DS-DIGI.TTF', 200), (255, 405, 255), screen, 850,
+                              360)
+            draw_textConsolka(consol7, pygame.font.Font('7fonts.ru_DS-DIGI.TTF', 200), (255, 405, 255), screen, 550,
+                              500)
+            draw_textConsolka(consol8, pygame.font.Font('7fonts.ru_DS-DIGI.TTF', 200), (255, 405, 255), screen, 700,
+                              500)
+            draw_textConsolka(consol9, pygame.font.Font('7fonts.ru_DS-DIGI.TTF', 200), (255, 405, 255), screen, 850,
+                              500)
+            draw_textConsolka(consolC, pygame.font.Font('7fonts.ru_DS-DIGI.TTF', 135), (255, 405, 255), screen, 570,
+                              650)
+            draw_textConsolka(consol0, pygame.font.Font('7fonts.ru_DS-DIGI.TTF', 135), (255, 405, 255), screen, 715,
+                              650)
+            draw_textConsolka(consolEN, pygame.font.Font('7fonts.ru_DS-DIGI.TTF', 40), (255, 405, 255), screen, 840,
+                              700)
+            draw_textConsolka(consol, pygame.font.Font('7fonts.ru_DS-DIGI.TTF', 135), (255, 405, 255), screen, 568,
+                              120)
+            mouse_pos = pygame.mouse.get_pos()
+            screen.blit(IMAGE, mouse_pos)
+            pygame.display.flip()
+            pygame.display.update()
+        pygame.quit()
+
+def seifopen():
+    global spavn
+    spavn += 1
+    seifopen.counter = 1
+    if spavn == 1:
+        print(101)
+    backgroung = pygame.image.load('сейф внутри.png')
+    backgroungwithout = pygame.image.load('сейф внутри2.png')
+    if __name__ == '__main__':
+        pygame.display.flip()
+        clock = pygame.time.Clock()
+        running = True
+        maskDoc = pygame.Rect(470, 520, 555, 130)
+        documents = False
+        while running:
+            clock.tick(30)
+            mx, my = pygame.mouse.get_pos()
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if maskDoc.collidepoint(mx, my):
+                        documents = True
+                else:
+                    pygame.display.flip()
+                if event.type == QUIT:
+                    ACT1_5()
+            if documents == False:
+                screen.blit(backgroung, (0, 0))
+            if documents == True:
+                screen.blit(backgroungwithout, (0, 0))
+            mouse_pos = pygame.mouse.get_pos()
+            screen.blit(IMAGE, mouse_pos)
+            #pygame.draw.rect(screen, pygame.Color('blue'), maskDoc)
+
 pygame.mixer.init()
 pygame.mouse.set_visible(False)
 a, b = 1600, 900
@@ -683,5 +924,6 @@ background = pygame.image.load('фон3.png')
 
 but = pygame.transform.scale(pygame.image.load('кнопка.png').convert_alpha(), (400, 100))
 but1 = pygame.transform.scale(pygame.image.load('кнопка1.png').convert_alpha(), (400, 100))
-PREVIEW.p()
-main_menu()
+# PREVIEW.p()
+# main_menu()
+ACT1_5()
