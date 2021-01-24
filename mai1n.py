@@ -248,8 +248,11 @@ def ACT1_REFORGE():
         pygame.quit()
 
 spavn = 0
+coat = 0
+document = 0
 
 def ACT1_5():
+    global coat, uslovie, document
     pygame.init()
     pygame.mixer.music.load('Звуки и музыка\дождьдом.mp3')
     pygame.mixer.music.play(-1)
@@ -258,19 +261,23 @@ def ACT1_5():
     s.set_volume(0.1)
     pressspace = pygame.image.load('Спрайты\Элементы интерфейса\НАЖМИТЕ ПРОБЕЛ.png').convert_alpha()
     background = pygame.image.load('фон2.png').convert_alpha()
+    backgroundwithout = pygame.image.load('фон22.png')
     table = pygame.Rect(600, 500, 480, 250)
     seif = pygame.Rect(1280, 400, 150, 200)
-    paltishko = pygame.Rect(200, 400, 150, 600)
+    paltishko = pygame.Rect(265, 200, 150, 600)
+    palto = 0
+    pal = True
+    uslovie = 0
     if __name__ == '__main__':
         screen = pygame.display.set_mode(size)
         pygame.display.flip()
         pygame.mouse.set_visible(False)
         background_x = 0
-        textstart = True
         speed = 20
-        c = 0
-        global uslovie
-        uslovie = False
+        if palto == 1:
+            uslovie += 1
+        elif document == 1:
+            uslovie += 1
         if spavn == 0:
             mainPerson = Person(20,  # начальная координата x
                                 20,  # минимальное значение x
@@ -347,7 +354,15 @@ def ACT1_5():
             player = mainPerson.getPlayerSprite()
             if mainPerson.isPlayMusic():
                 s.play()
-            screen.blit(background, (background_x, y))
+            if move[pygame.K_SPACE] and mask.colliderect(paltishko):
+                palto = 1
+                coat = 1
+            if coat == 1:
+                pal = False
+            if pal == False:
+                screen.blit(backgroundwithout, (background_x, y))
+            if pal == True:
+                screen.blit(background, (background_x, y))
             screen.blit(player, (x, 300))
             mouse_pos = pygame.mouse.get_pos()
             screen.blit(IMAGE, mouse_pos)
@@ -359,10 +374,8 @@ def ACT1_5():
                 бумажечки.paper()
             if move[pygame.K_SPACE] and mask.colliderect(seif):
                 saif()
-            if uslovie == True:
-                print(1)
-            pygame.draw.rect(screen, pygame.Color('red'), seif)
-            pygame.draw.rect(screen, pygame.Color('red'), paltishko)
+            #pygame.draw.rect(screen, pygame.Color('red'), seif)
+            #pygame.draw.rect(screen, pygame.Color('red'), paltishko)
             pygame.display.update()
         pygame.quit()
 
@@ -697,7 +710,6 @@ def BATTLE_DED():
         schetpi += 1
     chis = 1
 
-
 def saif():
     global spavn
     spavn += 1
@@ -878,7 +890,7 @@ def consolka():
         pygame.quit()
 
 def seifopen():
-    global spavn
+    global spavn, document
     spavn += 1
     seifopen.counter = 1
     if spavn == 1:
@@ -906,6 +918,7 @@ def seifopen():
                 screen.blit(backgroung, (0, 0))
             if documents == True:
                 screen.blit(backgroungwithout, (0, 0))
+                document = 1
             mouse_pos = pygame.mouse.get_pos()
             screen.blit(IMAGE, mouse_pos)
             #pygame.draw.rect(screen, pygame.Color('blue'), maskDoc)
