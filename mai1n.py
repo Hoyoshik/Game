@@ -264,7 +264,7 @@ def ACT1_5():
     pressspace = pygame.image.load('Спрайты\Элементы интерфейса\НАЖМИТЕ ПРОБЕЛ.png').convert_alpha()
     background = pygame.image.load('фон2.png').convert_alpha()
     backgroundwithout = pygame.image.load('фон22.png').convert_alpha()
-    table = pygame.Rect(600, 500, 480, 250)
+    table = pygame.Rect(750, 500, 300, 250)
     seif = pygame.Rect(1280, 400, 150, 200)
     paltishko = pygame.Rect(265, 200, 150, 600)
     door = pygame.Rect(60, 300, 220, 400)
@@ -379,6 +379,8 @@ def ACT1_5():
             #pygame.draw.rect(screen, pygame.Color('red'), seif)
             #pygame.draw.rect(screen, pygame.Color('red'), paltishko)
             #pygame.draw.rect(screen, pygame.Color('red'), door)
+            #pygame.draw.rect(screen, pygame.Color('red'), table)
+            #pygame.draw.rect(screen, pygame.Color('blue'), mask)
             pygame.display.update()
         pygame.quit()
 
