@@ -453,6 +453,8 @@ def ACT1_5_2():
             player = mainPerson.getPlayerSprite()
             if mainPerson.isPlayMusic():
                 s.play()
+            if x == 1250:
+                main_menu()
             screen.blit(background, (background_x, y))
             screen.blit(player, (x, 300))
             mouse_pos = pygame.mouse.get_pos()
