@@ -196,7 +196,9 @@ def ACT1_REFORGE():
                     screen.fill((0, 0, 0))
                     pygame.display.update()
                     schetpi += 1
-                    BATTLE_DED()
+                    while restart:
+                        BATTLE_DED()
+
 
             c += 1
             if c == 8:
@@ -572,7 +574,7 @@ def main_menu():
 
 
 def BATTLE_DED():
-    global chis
+    global chis, restart
     back = pygame.image.load('фонбитва.png').convert_alpha()
     ded1 = pygame.transform.smoothscale(pygame.image.load('битваГ1.png').convert_alpha(), (600, 600))
     ded2 = pygame.transform.smoothscale(pygame.image.load('битваГ2.png').convert_alpha(), (600, 600))
@@ -652,11 +654,7 @@ def BATTLE_DED():
                 if event.key == K_SPACE and c != True:
                     c = True
                     if kadrplayer == 4:
-                        for i in range(1):
-                            dedSt1 == False
-                            dead == False
-                            anima = True
-                            br = False
+                        restart = False
                     else:
                         kadrplayer += 1
                 if event.key == K_ESCAPE:
@@ -680,8 +678,9 @@ def BATTLE_DED():
         if schetpi % 10 == 0:
             c1 = True
             if g == 8:
+                screen.fill((0, 0, 0))
                 PREVIEW.death()
-                BATTLE_DED()
+                br = False
             else:
                 g += 1
 
@@ -912,6 +911,8 @@ size = width, height = a, b
 screen = pygame.display.set_mode(size)
 mainClock = pygame.time.Clock()
 
+restart = True
+
 font = pygame.font.SysFont(None, 20)
 
 click = False
@@ -920,7 +921,6 @@ background = pygame.image.load('фон3.png').convert_alpha()
 but = pygame.transform.scale(pygame.image.load('кнопка.png').convert_alpha(), (400, 100))
 but1 = pygame.transform.scale(pygame.image.load('кнопка1.png').convert_alpha(), (400, 100))
 #PREVIEW.p()
-#main_menu()
-ACT1_5_2()
+main_menu()
 #ACT1_REFORGE()
 #BATTLE_DED()
