@@ -6,7 +6,6 @@ from pygame.locals import *
 import PREVIEW
 import бумажечки
 
-
 class Person:
     def __init__(self, x, minX, maxX, speed, playerR, playerL, img_names2, img_names3):
         self.x = x
@@ -253,8 +252,6 @@ document = 0
 
 def ACT1_5():
     global coat, uslovie, document
-    if document == 1:
-        print(101)
     pygame.init()
     pygame.mixer.music.load('Звуки и музыка\дождьдом.mp3')
     pygame.mixer.music.play(-1)
@@ -301,7 +298,6 @@ def ACT1_5():
                                 # изображения для анимации ходьбы в левую сторону
                                 )  # главный герой
         if spavn > 0:
-            print(1)
             mainPerson = Person(1200,  # начальная координата x
                                 20,  # минимальное значение x
                                 1250,  # максимальное значение x
@@ -458,8 +454,6 @@ def ACT1_5_2():
             mask.x = x
             mask.y = 300
 
-            print(x)
-
             if textstart:
                 draw_text('попадите в дом', pygame.font.Font('20031 (1).otf', 20), (255, 255, 255), screen, 20, 20)
 
@@ -493,7 +487,7 @@ def main_menu():
 
     m = 0
     ty = pygame.image.load('1туман.png').convert_alpha()
-    tyx = -300
+    tyx = 2000
     menusp = (
         'меню.png', 'меню2.png', 'меню4.png', 'меню5.png', 'меню6.png', 'меню7.png', 'меню8.png')
     menu = list()
@@ -501,8 +495,8 @@ def main_menu():
         menu.append(pygame.image.load(i).convert_alpha())
 
     while True:
-        if tyx == -4800:
-            tyx = -300
+        if tyx == -6400:
+            tyx = 2000
         screen.fill((pygame.Color('Black')))
         screen.blit(background, (0, 0))
         draw_text('главное меню', pygame.font.Font('20031 (1).otf', 50), (255, 255, 255), screen, 20, 20)
@@ -514,7 +508,7 @@ def main_menu():
         screen.blit(menu[m], (0, 0))
         screen.blit(ty, (tyx, 0))
 
-        tyx -= 10
+        tyx -= 100
 
         screen.blit(but, (90, 195))
         screen.blit(but, (90, 345))
@@ -534,7 +528,6 @@ def main_menu():
                     # s.play()
                     g = True
                     image = pygame.image.load('черрный фон.jpg')
-                    image2 = image
                     while g:
                         if x != 920:
                             x += 30
@@ -543,15 +536,12 @@ def main_menu():
                             screen.blit(image, (x1, 0))
                             pygame.display.flip()
                             pygame.display.update()
-                            mainClock.tick(12)
+                            mainClock.tick(24)
                         else:
                             g = False
                     pygame.mixer.music.stop()
                     ACT1_REFORGE()
                     pygame.quit()
-        if button_2.collidepoint((mx, my)):
-            screen.blit(but1, (90, 345))
-            draw_text('продолжить игру', pygame.font.Font('20031 (1).otf', 38), (255, 255, 255), screen, 105, 376)
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -568,7 +558,7 @@ def main_menu():
         screen.blit(IMAGE, mouse_pos)
         pygame.display.flip()
         pygame.display.update()
-        mainClock.tick(12)
+        mainClock.tick(24)
 
 
 def BATTLE_DED():
@@ -681,7 +671,7 @@ def BATTLE_DED():
             c1 = True
             if g == 8:
                 PREVIEW.death()
-                break
+                BATTLE_DED()
             else:
                 g += 1
 
@@ -696,7 +686,7 @@ def BATTLE_DED():
         else:
             screen.blit(battle1[0], (450, 300))
         pygame.display.update()
-        mainClock.tick(10)
+        mainClock.tick(24)
         schetpi += 1
     chis = 1
 
@@ -883,8 +873,6 @@ def seifopen():
     global spavn, document
     spavn += 1
     seifopen.counter = 1
-    if spavn == 1:
-        print(101)
     backgroung = pygame.image.load('сейф внутри.png').convert_alpha()
     backgroungwithout = pygame.image.load('сейф внутри2.png').convert_alpha()
     if __name__ == '__main__':
@@ -927,6 +915,8 @@ background = pygame.image.load('фон3.png').convert_alpha()
 
 but = pygame.transform.scale(pygame.image.load('кнопка.png').convert_alpha(), (400, 100))
 but1 = pygame.transform.scale(pygame.image.load('кнопка1.png').convert_alpha(), (400, 100))
-# PREVIEW.p()
-# main_menu()
-ACT1_5()
+#PREVIEW.p()
+main_menu()
+#ACT1_5()
+ACT1_REFORGE()
+BATTLE_DED()
