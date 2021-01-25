@@ -392,10 +392,8 @@ def ACT1_5_2():
     pygame.mixer.music.set_volume(0.05)
     s = pygame.mixer.Sound('Звуки и музыка\шаг.ogg')
     s.set_volume(0.1)
-    pressspace = pygame.image.load('Спрайты\Элементы интерфейса\НАЖМИТЕ ПРОБЕЛ.png').convert_alpha()
     background = pygame.image.load('фон4.png').convert_alpha()
     bl = False
-    black = pygame.image.load('конец.png').convert_alpha()
     if __name__ == '__main__':
         screen = pygame.display.set_mode(size)
         pygame.display.flip()
@@ -455,7 +453,7 @@ def ACT1_5_2():
             player = mainPerson.getPlayerSprite()
             if mainPerson.isPlayMusic():
                 s.play()
-                screen.blit(background, (background_x, y))
+            screen.blit(background, (background_x, y))
             screen.blit(player, (x, 300))
             mouse_pos = pygame.mouse.get_pos()
             screen.blit(IMAGE, mouse_pos)
@@ -463,11 +461,6 @@ def ACT1_5_2():
             mask = player.get_rect()
             mask.x = x
             mask.y = 300
-
-            print(x)
-
-            if textstart:
-                draw_text('попадите в дом', pygame.font.Font('20031 (1).otf', 20), (255, 255, 255), screen, 20, 20)
 
             pygame.display.update()
         pygame.quit()
@@ -655,6 +648,7 @@ def BATTLE_DED():
                     c = True
                     if kadrplayer == 4:
                         restart = False
+                        br = False
                     else:
                         kadrplayer += 1
                 if event.key == K_ESCAPE:
