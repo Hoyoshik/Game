@@ -392,6 +392,8 @@ def ACT1_5_2():
     s.set_volume(0.1)
     pressspace = pygame.image.load('Спрайты\Элементы интерфейса\НАЖМИТЕ ПРОБЕЛ.png').convert_alpha()
     background = pygame.image.load('фон4.png').convert_alpha()
+    bl = False
+    black = pygame.image.load('конец.png').convert_alpha()
     if __name__ == '__main__':
         screen = pygame.display.set_mode(size)
         pygame.display.flip()
@@ -451,7 +453,7 @@ def ACT1_5_2():
             player = mainPerson.getPlayerSprite()
             if mainPerson.isPlayMusic():
                 s.play()
-            screen.blit(background, (background_x, y))
+                screen.blit(background, (background_x, y))
             screen.blit(player, (x, 300))
             mouse_pos = pygame.mouse.get_pos()
             screen.blit(IMAGE, mouse_pos)
@@ -500,6 +502,7 @@ def main_menu():
     menu = list()
     for i in menusp:
         menu.append(pygame.image.load(i).convert_alpha())
+    image = pygame.image.load('черрный фон.jpg')
 
     while True:
         if tyx == -6400:
@@ -534,7 +537,7 @@ def main_menu():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     # s.play()
                     g = True
-                    image = pygame.image.load('черрный фон.jpg')
+
                     while g:
                         if x != 920:
                             x += 30
@@ -918,6 +921,6 @@ but = pygame.transform.scale(pygame.image.load('кнопка.png').convert_alpha
 but1 = pygame.transform.scale(pygame.image.load('кнопка1.png').convert_alpha(), (400, 100))
 #PREVIEW.p()
 #main_menu()
-ACT1_5()
+ACT1_5_2()
 #ACT1_REFORGE()
 #BATTLE_DED()
