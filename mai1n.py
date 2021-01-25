@@ -252,6 +252,8 @@ document = 0
 
 def ACT1_5():
     global coat, uslovie, document
+    if document == 1:
+        print(101)
     pygame.init()
     pygame.mixer.music.load('Звуки и музыка\дождьдом.mp3')
     pygame.mixer.music.play(-1)
@@ -298,6 +300,7 @@ def ACT1_5():
                                 # изображения для анимации ходьбы в левую сторону
                                 )  # главный герой
         if spavn > 0:
+            print(1)
             mainPerson = Person(1200,  # начальная координата x
                                 20,  # минимальное значение x
                                 1250,  # максимальное значение x
@@ -321,7 +324,6 @@ def ACT1_5():
                                  "Спрайты\Персонаж\\left\ле11.png", "Спрайты\Персонаж\\left\ле12.png")
                                 # изображения для анимации ходьбы в левую сторону
                                 )  # главный герой
-
         clock = pygame.time.Clock()
         running = True
         pygame.mixer.music.play(-1)
@@ -389,7 +391,7 @@ def ACT1_5_2():
     s = pygame.mixer.Sound('Звуки и музыка\шаг.ogg')
     s.set_volume(0.1)
     pressspace = pygame.image.load('Спрайты\Элементы интерфейса\НАЖМИТЕ ПРОБЕЛ.png').convert_alpha()
-    background = pygame.image.load('фон3.png').convert_alpha()
+    background = pygame.image.load('фон4.png').convert_alpha()
     if __name__ == '__main__':
         screen = pygame.display.set_mode(size)
         pygame.display.flip()
@@ -397,29 +399,28 @@ def ACT1_5_2():
         background_x = 0
         textstart = True
         speed = 20
-        mainPerson = Person(20,  # начальная координата x
-                            20,  # минимальное значение x
-                            1250,  # максимальное значение x
-                            speed,  # скорость изменения x
-                            'Спрайты\Персонаж\персонаж.png',
-                            # путь к изображению стоящего персонажа вмторящего в правую сторону
-                            'Спрайты\Персонаж\персонаж2.png',
-                            # путь к изображению стоящего персонажа вмторящего в левую сторону
-                            ('Спрайты\Персонаж\\right\пр1.png', 'Спрайты\Персонаж\\right\пр2.png',
-                             'Спрайты\Персонаж\\right\пр3.png', 'Спрайты\Персонаж\\right\пр4.png',
-                             'Спрайты\Персонаж\\right\пр5.png', 'Спрайты\Персонаж\\right\пр6.png',
-                             'Спрайты\Персонаж\\right\пр7.png', 'Спрайты\Персонаж\\right\пр8.png',
-                             'Спрайты\Персонаж\\right\пр9.png', 'Спрайты\Персонаж\\right\пр10.png',
-                             'Спрайты\Персонаж\\right\пр11.png', 'Спрайты\Персонаж\\right\пр12.png'),
-                            # изображения для анимации ходьбы в правую сторону
-                            ("Спрайты\Персонаж\\left\ле1.png", "Спрайты\Персонаж\\left\ле2.png",
-                             "Спрайты\Персонаж\\left\ле3.png", "Спрайты\Персонаж\\left\ле4.png",
-                             "Спрайты\Персонаж\\left\ле5.png", "Спрайты\Персонаж\\left\ле6.png",
-                             "Спрайты\Персонаж\\left\ле7.png", "Спрайты\Персонаж\\left\ле8.png",
-                             "Спрайты\Персонаж\\left\ле9.png", "Спрайты\Персонаж\\left\ле10.png",
-                             "Спрайты\Персонаж\\left\ле11.png", "Спрайты\Персонаж\\left\ле12.png")
-                            # изображения для анимации ходьбы в левую сторону
-                            )  # главный герой
+        mainPerson = Person(20,
+                             20,
+                             1250,
+                             speed,
+                             'Спрайты\Персонаж\пальтопр.png',
+                             'Спрайты\Персонаж\пальтоле.png',
+                             # путь к изображению стоящего персонажа вмторящего в левую сторону
+                             ('Спрайты\Персонаж\\coatright\пальто1пр.png', 'Спрайты\Персонаж\\coatright\пальто2пр.png',
+                              'Спрайты\Персонаж\\coatright\пальто3пр.png', 'Спрайты\Персонаж\\coatright\пальто4пр.png',
+                              'Спрайты\Персонаж\\coatright\пальто5пр.png', 'Спрайты\Персонаж\\coatright\пальто6пр.png',
+                              'Спрайты\Персонаж\\coatright\пальто7пр.png', 'Спрайты\Персонаж\\coatright\пальто8пр.png',
+                              'Спрайты\Персонаж\\coatright\пальто9пр.png', 'Спрайты\Персонаж\\coatright\пальто10пр.png',
+                              'Спрайты\Персонаж\\coatright\пальто11пр.png'),
+                             # изображения для анимации ходьбы в правую сторону
+                             ('Спрайты\Персонаж\\coatleft\пальто1ле.png', 'Спрайты\Персонаж\\coatleft\пальто2ле.png',
+                              'Спрайты\Персонаж\\coatleft\пальто3ле.png', 'Спрайты\Персонаж\\coatleft\пальто4ле.png',
+                              'Спрайты\Персонаж\\coatleft\пальто5ле.png', 'Спрайты\Персонаж\\coatleft\пальто6ле.png',
+                              'Спрайты\Персонаж\\coatleft\пальто7ле.png', 'Спрайты\Персонаж\\coatleft\пальто8ле.png',
+                              'Спрайты\Персонаж\\coatleft\пальто9ле.png', 'Спрайты\Персонаж\\coatleft\пальто10ле.png',
+                              'Спрайты\Персонаж\\coatleft\пальто11ле.png')
+                             # изображения для анимации ходьбы в левую сторону
+                             )  # главный герой
         clock = pygame.time.Clock()
         running = True
         pygame.mixer.music.play(-1)
@@ -441,7 +442,12 @@ def ACT1_5_2():
                 mainPerson.stepLeft()
             elif move[pygame.K_RIGHT] and x < 1250:
                 mainPerson.stepRight()
-
+            elif move[pygame.K_RIGHT] and x >= 1250 and background_x != -1300:
+                background_x -= speed
+                mainPerson.stepRight()
+            elif move[pygame.K_LEFT] and x <= 20 and background_x < 0:
+                background_x += speed
+                mainPerson.stepLeft()
             player = mainPerson.getPlayerSprite()
             if mainPerson.isPlayMusic():
                 s.play()
@@ -454,12 +460,13 @@ def ACT1_5_2():
             mask.x = x
             mask.y = 300
 
+            print(x)
+
             if textstart:
                 draw_text('попадите в дом', pygame.font.Font('20031 (1).otf', 20), (255, 255, 255), screen, 20, 20)
 
             pygame.display.update()
         pygame.quit()
-
 
 IMAGE = pygame.image.load('курсор2.png')
 
@@ -754,11 +761,8 @@ def consolka():
         pygame.display.flip()
         clock = pygame.time.Clock()
         running = True
-        textstart = True
         consol = '000000'
         kod = '231426'
-        saifopen = False
-        Error = False
         while running:
             clock.tick(30)
             mx, my = pygame.mouse.get_pos()
@@ -824,14 +828,11 @@ def consolka():
                         simvol = 0
                     if maskconEN.collidepoint(mx, my):
                         if consol == kod:
-                            saifopen = True
-                            edit = list(consol)
                             edit = 'OPEN!'
                             consol = ''.join(edit)
                             uslovie == True
                             seifopen()
                         else:
-                            edit = list(consol)
                             consol = consolError
                             simvol = 6
                 else:
@@ -916,7 +917,7 @@ background = pygame.image.load('фон3.png').convert_alpha()
 but = pygame.transform.scale(pygame.image.load('кнопка.png').convert_alpha(), (400, 100))
 but1 = pygame.transform.scale(pygame.image.load('кнопка1.png').convert_alpha(), (400, 100))
 #PREVIEW.p()
-main_menu()
-#ACT1_5()
-ACT1_REFORGE()
-BATTLE_DED()
+#main_menu()
+ACT1_5()
+#ACT1_REFORGE()
+#BATTLE_DED()
